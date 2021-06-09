@@ -26,3 +26,11 @@
  - 3.) What would you do differently if you could use the RSS feed?
 
     - As RSS feeds are XML ,will go for well know/stable ROME library from Java-tech stack
+    - https://blog.mestwin.net/web-scraper-and-rss-feed-generator-with-spring-boot/
+
+ ###  Room for improvement
+  
+   - The call from client api to external api is sequential as we are not aware of the total pages upfront
+   - If page is known upfront ,we can make parallel calls to reduce time
+
+
