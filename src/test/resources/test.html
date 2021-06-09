@@ -1,0 +1,3163 @@
+
+<!-- html-header type=legacy begin -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta name="viewport" content="width=1000, user-scalable=yes, minimum-scale=0, maximum-scale=10.0" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+
+
+    <script id="before-content" type="text/javascript">
+(function () {
+    if (typeof window.sdmedia !== 'object') {
+         window.sdmedia = {};
+    }
+    if (typeof window.sdmedia.site !== 'object') {
+        window.sdmedia.site = {};
+    }
+
+    var site = window.sdmedia.site;
+    site.rootdir = "//slashdot.org";
+}());
+
+var pageload = {
+	pagemark: '434690093596275016',
+	before_content: (new Date).getTime()
+};
+function pageload_done( $, console, maybe ){
+	pageload.after_readycode	= (new Date).getTime();
+	pageload.content_ready_time	= pageload.content_ready - pageload.before_content;
+	pageload.script_ready_time	= pageload.after_readycode - pageload.content_ready;
+	pageload.ready_time		= pageload.after_readycode - pageload.before_content;
+	// Only report 1% of cases.
+	maybe || (Math.random()>0.01) || $.ajax({ data: {
+		op: 'page_profile',
+		pagemark: pageload.pagemark,
+		dom: pageload.content_ready_time,
+		js: pageload.script_ready_time
+	} });
+}
+</script>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+
+    <meta property="fb:admins" content="100000696822412">
+    <meta property="fb:page_id" content="267995220856">
+    <title>Chronological Story Archive on  Slashdot</title>
+
+
+    <link rel="stylesheet" type="text/css" media="screen, projection" href="//a.fsdn.com/sd/classic.ssl.css?e7edabf395ad3b0a" >
+    <!--[if IE 8]><link rel="stylesheet" type="text/css" media="screen, projection" href="//a.fsdn.com/sd/ie8-classic.ssl.css?e7edabf395ad3b0a" ><![endif]-->
+    <!--[if IE 7]><link rel="stylesheet" type="text/css" media="screen, projection" href="//a.fsdn.com/sd/ie7-classic.ssl.css?e7edabf395ad3b0a" ><![endif]-->
+
+
+
+
+
+    <script src="//a.fsdn.com/con/js/sftheme/cmp5.js"></script>
+    <script src="https://slashdot.org/country.js"></script>
+    <script>
+        if (window.is_euro_union === 1 || (window.region == 'CA' && window.country_code2 == 'US')) {
+            window.bizx.cmp.init({cmp_id: 12126}, 'consentmanager.net');
+        }
+    </script>
+    <script src="https://a.fsdn.com/con/js/sftheme/vendor/promise.polyfill.min.js"></script>
+    <link rel="stylesheet" href="//a.fsdn.com/con/css/sftheme/sandiego/cmp.css?2020-06-11" type="text/css">
+
+    <script type='text/javascript'>
+var _gaq = _gaq || [];
+</script>
+
+
+
+
+
+
+
+
+
+    <script type="text/javascript" id="pbjs_script" data-dom="https://d3tglifpd8whs6.cloudfront.net"  src="https://d3tglifpd8whs6.cloudfront.net/js/prebid/slash-homepage/slash-homepage.min.js"></script>
+    <script type='text/javascript'>
+    /*global performance */
+    var googletag = window.googletag || {};
+    googletag.cmd = googletag.cmd || [];
+
+    	window.SD = {};
+		window.SD.Ads = {};
+
+		window.SD.Ads.slotsById = {};
+		window.SD.Ads.idsByPath = {};
+
+		window.SD.Ads.visibleTime = {};
+		window.SD.Ads.Helpers = {};
+
+		//window.SD = SD;
+
+    bizx.cmp.ifConsent('', ['all','google-ads'], function(){
+        window.bizxPrebid.Ads.initPrebid(window.bizxPrebid.adUnits);
+    });
+</script>
+
+    <!-- prep GPT ads -->
+    <script type='text/javascript'>
+(function() {
+	function page_type (loc) {
+		/*
+		only four page types:
+		- Story
+		- Poll
+		- Homepage (/ only)
+		- Other (but AdOps wants 'Homepage' again)
+		*/
+		var path = loc.pathname;
+		var just_the_root = /^\/?$/.test(path);
+		var story_or_poll = /^\/(story(?=\/)|submission(?=\/)|poll(?=\/|Booth|s\b))/i.exec(path);
+
+		var page_type = just_the_root ? 'homepage'
+			: story_or_poll ? story_or_poll[1]
+				: 'other'
+
+		// exceptions
+		if (page_type.toLowerCase() === 'submission')
+			page_type = 'story'; // submissions are like stories, right?
+		else if (page_type.toLowerCase() === 'other')
+			page_type = 'homepage'; // this one might move out of here
+
+		return page_type;
+	}
+
+	function page_section(loc) {
+		//var greek = ['alpha', 'beta', 'gamma', 'delta'].join('|');
+		//var hostwise = '^([a-z]+)(?:-(?:'+greek+'))?\\.(?:slashdot\\.org|\\.xb\\.sf\\.net)$';
+		var pathwise = '^/(?:(recent|popular|blog)|stories/([^/]+))';
+		var rootwise = '^\/?$';
+
+		//var hostwisely = new RegExp(hostwise,'i').exec(loc.hostname);
+		var pathwisely = new RegExp(pathwise, 'i').exec(loc.pathname);
+		var rootwisely = new RegExp(rootwise, 'i').exec(loc.pathname);
+
+		var section = (rootwisely && 'homepage')
+			|| (pathwisely && (pathwisely[1] || pathwisely[2]))
+			|| ''
+		;
+
+		return section.replace(/[^_a-z]/ig, '');
+	}
+
+	function single_size(size) {
+		return '' + size[0] + 'x' + size[1];
+	}
+
+	function sz_sz(sz) {
+		var str = '';
+		var sizes = [];
+		if (sz[0] instanceof Array) {
+			for (size in sz) {
+				sizes.push(single_size(sz[size]));
+			}
+			return sizes.join(',');
+		} else {
+			return single_size(sz);
+		}
+	}
+
+	function unique_tpc_array(array1, array2) {
+		var j = array1.concat(array2);
+		j.forEach(function (v, i, a) {
+			a[i] = v.replace(/[^_a-z]/ig, '');
+		});
+		return j.filter(function (v, i, a) {
+			return v != '' && a.indexOf(v) === i;
+		});
+	}
+
+	/* LEGEND:
+		- 'sz' = "size"
+		- 'npt' = "no page type" in ad unit name
+	*/
+	var tags = {
+		'728x90_A': {'sz': [[728, 90], [970, 90], [970, 250], [980, 66]]},
+		'728x90_B': {'sz': [728, 90]},
+		'728x90_C': {'sz': [728, 90], 'skip': {'homepage': 1}},
+		'HubIcon_200x90_A': {'sz': [[200, 90], [220, 90]]},
+		'PowerSwitch_980x66_A': {'sz': [980, 66], 'skip': {'homepage': 1}},
+		'PollPeel': {'sz': [200, 90], 'skip': {'homepage': 1}},
+		//'VideoWidget_300x250': { 'sz': [300, 250], 'npt': 1 },
+		'300x250_A': {'sz': [[300, 250], [300, 600], [300, 1050]]},
+		'300x250_B': {'sz': [[300, 250], [300, 600]]},
+		'300x250_C': {'sz': [[300, 250], [300, 600]]},
+		'300x250_D': {'sz': [[300, 250], [300, 600]]},
+		'Pulse_300x600_A': {'sz': [300, 600]},
+		//'Polls_Detail_300x250_A': { 'sz': [[300, 250], [300, 600]], 'npt': 1 },
+		//'Poll_300x250_A': { 'sz': [[300, 250], [300, 600]], 'npt': 1 },
+		//'SD_Story_1x1': { 'sz': [1, 1] },
+		'1x1': {'sz': [1, 1]}
+	};
+
+	//var network_path = '/41014381/Slashdot/';
+	var network_path = '/41014381/Slashdot/';
+	var tag_name_prefix = 'SD';
+	var tag_name_linkage = '_';
+	var tag_name_pagetype = page_type(location);
+	var tag_topic = page_section(location);
+	if (tag_name_pagetype == 'poll') {
+		tag_name_pagetype = 'Poll';
+	}
+	var before_tag_pagetyped = network_path
+		+ tag_name_prefix
+		+ tag_name_linkage
+		+ tag_name_pagetype
+		+ tag_name_linkage
+	;
+	var before_tag_pagetypeless = network_path
+		+ tag_name_prefix
+		+ tag_name_linkage
+		/* + tag_name_pagetype */
+		/* + tag_name_linkage */
+	;
+
+		//can be safely called
+		googletag.cmd.push(function () {
+
+			function remove_sticky_top() {
+				setTimeout(function () {
+					$('#div-gpt-ad-728x90_a').parent('div').addClass('adwrap-viewed-banner');
+					$('#div-gpt-ad-728x90_a').addClass('viewableImpression');
+				}, 1000);
+			}
+
+			function remove_sticky_railad() {
+				setTimeout(function () {
+					$('#slashboxes .adwrap-unviewed').addClass('adwrap-viewed-railad');
+					$('.railad').addClass('viewableImpression');
+				}, 1000);
+			}
+
+			function viewable_imp(slot) {
+				for (var i in slot) {
+					remove_sticky_top();
+					remove_sticky_railad();
+					if (typeof slot[i] !== 'string') continue;
+					switch (slot[i]) {
+						//case "/41014381/Slashdot/SD_homepage_728x90_A":
+						//case "/41014381/Slashdot/SD_story_728x90_A":
+						//case "/41014381/Slashdot/SD_Poll_728x90_A":
+						//case "/41014381/Slashdot/SD_homepage_728x90_Ref_A":
+						//case "/41014381/Slashdot/SD_story_728x90_Ref_A":
+						//case "/41014381/Slashdot/SD_Poll_728x90_Ref_A":
+						//remove_sticky_top();
+						//break;
+						//case "/41014381/Slashdot/SD_homepage_300x250_A":
+						//case "/41014381/Slashdot/SD_story_300x250_A":
+						//case "/41014381/Slashdot/SD_Poll_300x250_A":
+						//case "/41014381/Slashdot/SD_homepage_300x250_Ref_A":
+						//case "/41014381/Slashdot/SD_story_300x250_Ref_A":
+						//case "/41014381/Slashdot/SD_Poll_300x250_Ref_A":
+						//remove_sticky_railad();
+						//break;
+					}
+					//if(slot[i] === "/41014381/Slashdot/SD_homepage_728x90_A") remove_sticky_top();
+					//if(slot[i] === "/41014381/Slashdot/SD_homepage_300x250_A") remove_sticky_railad();
+				}
+			}
+
+			function define_me_a_slot(tag) {
+				if (tags[tag].skip && tags[tag].skip[tag_name_pagetype])
+					return;
+				var sandbox_regex = /\.xb\.sf\.net$/i;
+				var full_name = tags[tag].npt  // "no page type"
+					? before_tag_pagetypeless + tag
+					: before_tag_pagetyped + tag
+				;
+				var div_id = 'div-gpt-ad-' + tag.toLowerCase();
+				// extend jQuery and get URL query params
+				jQuery.extend({
+					getQueryParameters: function (str) {
+						return (str || document.location.search).replace(/(^\?)/, '').split("&").map(function (n) {
+							return n = n.split("="), this[n[0]] = n[1], this
+						}.bind({}))[0];
+					}
+				});
+
+				var queryParams = $.getQueryParameters();
+
+				if (queryParams.source === 'autorefresh') {
+					full_name = full_name.replace(/(\d+x\d+)/, '$1_Ref');
+					//console.log('TAG NAME: ', full_name);
+				}
+
+				var slot = googletag.defineSlot(
+					full_name,
+					tags[tag].sz,
+					div_id
+				);
+
+				service = slot.addService(googletag.pubads());
+
+				window.SD.Ads.slotsById[div_id] = slot;
+				window.SD.Ads.idsByPath[full_name] = div_id;
+
+				service.setTargeting('sz', tags[tag].sz);
+
+
+				var frontend_tpc = tag_topic.split(",");
+				var backend_tpc = [  ];
+
+				var tpc_final = unique_tpc_array(frontend_tpc, backend_tpc);
+				service.setTargeting('tpc', tpc_final);
+				if (location.hostname.match(sandbox_regex)) {
+					service.setTargeting('test', 'adops');
+				}
+
+			}
+
+		for (tag in tags) {
+			define_me_a_slot(tag, false);
+		}
+
+
+			googletag.pubads().addEventListener('slotVisibilityChanged', window.SD.Ads.visibilityChangedTracker);
+
+
+		googletag.pubads().addEventListener('impressionViewable', function(event) {
+			viewable_imp(event.slot);
+		    });
+
+                googletag.pubads().setTargeting('requestSource', 'GPT');
+		googletag.pubads().enableAsyncRendering();
+
+
+		googletag.pubads().collapseEmptyDivs();
+		window.bizxPrebid.SAFEFRAMES = true;
+		window.SD.Ads.setupAdRefresh();
+		bizxPrebid.Ads.pushToGoogle();
+		googletag.enableServices();
+	});
+})();
+
+
+/* Ad-Refresh code */
+window.SD.Ads.visibilityChangedTracker = function(event) {
+	var id = event.slot.getSlotElementId();
+	if (!window.SD.Ads.visibleTime.hasOwnProperty(id)) {
+		window.SD.Ads.visibleTime[id] = {
+			visible: false,
+			prevVisibleTotal: 0,
+			wasVisibleBeforePageBgd: false,
+			reloadCount: 0
+		};
+	}
+	var timeinfo = window.SD.Ads.visibleTime[id];
+	if (event.inViewPercentage >= 50 && !document.hidden) {
+		if (!timeinfo.visible) {
+			timeinfo.visible = performance.now();
+		}
+	} else {
+		if (timeinfo.visible) {
+			timeinfo.prevVisibleTotal += performance.now() - timeinfo.visible;
+			timeinfo.visible = false;
+		}
+	}
+};
+
+window.SD.Ads.setupAdRefresh = function() {
+	document.addEventListener('visibilitychange', function () {
+		for (var id in window.SD.Ads.visibleTime) {
+			if (window.SD.Ads.visibleTime.hasOwnProperty(id)) {
+				var timeinfo = window.SD.Ads.visibleTime[id];
+				if (document.hidden) {
+					timeinfo.wasVisibleBeforePageBgd = !!timeinfo.visible;
+					if (timeinfo.visible) {
+						timeinfo.prevVisibleTotal += performance.now() - timeinfo.visible;
+						timeinfo.visible = false;
+					}
+				} else if (!document.hidden && timeinfo.wasVisibleBeforePageBgd) {
+					timeinfo.visible = performance.now();
+				}
+			}
+		}
+	}, false);
+
+	// after 30 sec, start checking every second for reload
+	var LIMIT_MS = 30000;
+	setTimeout(function () {
+		//
+		setInterval(function () {
+			if (document.hidden) {
+				return;
+			}
+			for (var id in window.SD.Ads.visibleTime) {
+				if (window.SD.Ads.visibleTime.hasOwnProperty(id)) {
+					var timeinfo = window.SD.Ads.visibleTime[id];
+					if (timeinfo.visible &&
+						timeinfo.prevVisibleTotal + (performance.now() - timeinfo.visible) >= LIMIT_MS &&
+						timeinfo.reloadCount < 50
+					) {
+						timeinfo.reloadCount++;
+						timeinfo.visible = false;
+						timeinfo.prevVisibleTotal = 0;
+						window.SD.Ads.Helpers.refreshBids([id]);
+					}
+				}
+			}
+		}, 1000);
+	}, LIMIT_MS);
+};
+
+window.SD.Ads.Helpers.refreshBids = function (reloadIds) {
+		console.log('AD REFRESH: refreshBids', reloadIds);
+		pbjs.que.push(function () {
+			for (var i = reloadIds.length-1; i >= 0; i--) {
+				var id = reloadIds[i];
+				// clear out winner status from earlier auctions
+				if (bizxPrebid.Ads.prebidWinners[id]) {
+					delete bizxPrebid.Ads.prebidWinners[id];
+				}
+				// if has complement (hubicon), remove it since they are just house ads and can cause funky layouts if this leaderboard is refreshed to a different size
+				var path = window.SD.Ads.slotsById[id].getAdUnitPath();
+				/*var complement = gptadComplements[path];
+				if (complement) {
+					var complement_shortname = complement[0];
+					var complement_path = "/41014381/SD/" + complement_shortname;
+					var slot = window.SD.Ads.slotsById[window.SD.Ads.idsByPath[complement_path]];
+					if (slot) {
+						googletag.destroySlots([slot]);
+						var $wrappedAd = $(window.SD.Ads.Helpers.getContainerIDFromPath(complement_path));
+						$wrappedAd.remove();
+						delete gptadComplements[path];
+					}
+				}*/
+
+			}
+
+			pbjs.requestBids({
+				timeout: window.bizxPrebid.PREBID_TIMEOUT,
+				adUnitCodes: reloadIds,
+				bidsBackHandler: function () {
+					var reloadSlots = reloadIds.map(function(id) { return window.SD.Ads.slotsById[id]; });
+
+					// clear out previous sizing attrs, as they may change after refresh
+/*
+					for (var i = 0; i < reloadSlots.length; i++) {
+						var $wrappedAd = $(window.SD.Ads.Helpers.getContainerIDFromPath(reloadSlots[i].getAdUnitPath()));
+						var classes = $wrappedAd.attr('class').split(' ');
+						for (var j = 0; j < classes.length; j++) {
+							if (classes[j].indexOf('sz_') >= 0) {
+								$wrappedAd.removeClass(classes[j]);
+							}
+						}
+					}
+*/
+					pbjs.setTargetingForGPTAsync(reloadIds);
+					googletag.pubads().refresh(reloadSlots);
+				}
+			});
+		});
+	}
+</script>
+
+    <!-- CrossPixel -->
+    <script type="text/javascript">
+if (window.is_euro_union === 0) {
+    bizx.cmp.ifConsent('', ['all'], function(){
+        try{(function(){ var cb = new Date().getTime(); var s = document.createElement("script"); s.defer = true; s.src = "//tag.crsspxl.com/s1.js?d=2397&cb="+cb; var s0 = document.getElementsByTagName('script')[0]; s0.parentNode.insertBefore(s, s0); })();}catch(e){}
+    });
+}
+</script>
+
+
+
+
+    <!-- AdBlock Check -->
+    <script>
+var isAdBlockActive = true;
+</script>
+    <script async src="//a.fsdn.com/sd/js/scripts/ad.js?e7edabf395ad3b0a"></script>
+</head>
+
+<body class="anon archive ">
+
+
+<script src="//a.fsdn.com/sd/all-minified.js?e7edabf395ad3b0a" type="text/javascript"></script>
+<script id="after-jquery" type="text/javascript">
+(function( $, pageload, pageload_done, console ){
+$ && pageload && $(function(){
+	pageload.content_ready = (new Date).getTime();
+	pageload_done && $(function(){ pageload_done($, console, 'maybe'); });
+});
+})(window.jQuery, window.pageload, window.pageload_done, window.console);
+</script>
+
+<script type="text/javascript">
+var suggestions_for_context = {
+	nod: 'fresh funny insightful interesting maybe ',
+	nix: 'binspam dupe notthebest offtopic slownewsday stale stupid ',
+
+	tagnod: 'descriptive',
+	feedback: 'typo dupe error',
+	metanod: 'insightful interesting informative funny underrated',
+	metanix: 'offtopic flamebait troll redundant overrated'
+};
+
+</script>
+
+<script type="text/javascript">
+	var adpage = 'index';
+	</script>
+
+
+<!-- html-header type=legacy end --><!-- header type=legacy begin -->
+
+<link rel="top"       title="News for nerds, stuff that matters" href="//slashdot.org/" >
+<link rel="search"    title="Search Slashdot" href="//slashdot.org/search.pl">
+<link rel="alternate" title="Slashdot RSS" href="http://rss.slashdot.org/Slashdot/slashdotMain" type="application/rss+xml">
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+<script type='text/javascript'>
+var _gaq = _gaq || [];
+</script>
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="pbjs_script" data-dom="https://d3tglifpd8whs6.cloudfront.net"  src="https://d3tglifpd8whs6.cloudfront.net/js/prebid/slash-homepage/slash-homepage.min.js"></script>
+<script type='text/javascript'>
+    /*global performance */
+    var googletag = window.googletag || {};
+    googletag.cmd = googletag.cmd || [];
+
+    	window.SD = {};
+		window.SD.Ads = {};
+
+		window.SD.Ads.slotsById = {};
+		window.SD.Ads.idsByPath = {};
+
+		window.SD.Ads.visibleTime = {};
+		window.SD.Ads.Helpers = {};
+
+		//window.SD = SD;
+
+    bizx.cmp.ifConsent('', ['all','google-ads'], function(){
+        window.bizxPrebid.Ads.initPrebid(window.bizxPrebid.adUnits);
+    });
+</script>
+
+<!-- prep GPT ads -->
+<script type='text/javascript'>
+(function() {
+	function page_type (loc) {
+		/*
+		only four page types:
+		- Story
+		- Poll
+		- Homepage (/ only)
+		- Other (but AdOps wants 'Homepage' again)
+		*/
+		var path = loc.pathname;
+		var just_the_root = /^\/?$/.test(path);
+		var story_or_poll = /^\/(story(?=\/)|submission(?=\/)|poll(?=\/|Booth|s\b))/i.exec(path);
+
+		var page_type = just_the_root ? 'homepage'
+			: story_or_poll ? story_or_poll[1]
+				: 'other'
+
+		// exceptions
+		if (page_type.toLowerCase() === 'submission')
+			page_type = 'story'; // submissions are like stories, right?
+		else if (page_type.toLowerCase() === 'other')
+			page_type = 'homepage'; // this one might move out of here
+
+		return page_type;
+	}
+
+	function page_section(loc) {
+		//var greek = ['alpha', 'beta', 'gamma', 'delta'].join('|');
+		//var hostwise = '^([a-z]+)(?:-(?:'+greek+'))?\\.(?:slashdot\\.org|\\.xb\\.sf\\.net)$';
+		var pathwise = '^/(?:(recent|popular|blog)|stories/([^/]+))';
+		var rootwise = '^\/?$';
+
+		//var hostwisely = new RegExp(hostwise,'i').exec(loc.hostname);
+		var pathwisely = new RegExp(pathwise, 'i').exec(loc.pathname);
+		var rootwisely = new RegExp(rootwise, 'i').exec(loc.pathname);
+
+		var section = (rootwisely && 'homepage')
+			|| (pathwisely && (pathwisely[1] || pathwisely[2]))
+			|| ''
+		;
+
+		return section.replace(/[^_a-z]/ig, '');
+	}
+
+	function single_size(size) {
+		return '' + size[0] + 'x' + size[1];
+	}
+
+	function sz_sz(sz) {
+		var str = '';
+		var sizes = [];
+		if (sz[0] instanceof Array) {
+			for (size in sz) {
+				sizes.push(single_size(sz[size]));
+			}
+			return sizes.join(',');
+		} else {
+			return single_size(sz);
+		}
+	}
+
+	function unique_tpc_array(array1, array2) {
+		var j = array1.concat(array2);
+		j.forEach(function (v, i, a) {
+			a[i] = v.replace(/[^_a-z]/ig, '');
+		});
+		return j.filter(function (v, i, a) {
+			return v != '' && a.indexOf(v) === i;
+		});
+	}
+
+	/* LEGEND:
+		- 'sz' = "size"
+		- 'npt' = "no page type" in ad unit name
+	*/
+	var tags = {
+		'728x90_A': {'sz': [[728, 90], [970, 90], [970, 250], [980, 66]]},
+		'728x90_B': {'sz': [728, 90]},
+		'728x90_C': {'sz': [728, 90], 'skip': {'homepage': 1}},
+		'HubIcon_200x90_A': {'sz': [[200, 90], [220, 90]]},
+		'PowerSwitch_980x66_A': {'sz': [980, 66], 'skip': {'homepage': 1}},
+		'PollPeel': {'sz': [200, 90], 'skip': {'homepage': 1}},
+		//'VideoWidget_300x250': { 'sz': [300, 250], 'npt': 1 },
+		'300x250_A': {'sz': [[300, 250], [300, 600], [300, 1050]]},
+		'300x250_B': {'sz': [[300, 250], [300, 600]]},
+		'300x250_C': {'sz': [[300, 250], [300, 600]]},
+		'300x250_D': {'sz': [[300, 250], [300, 600]]},
+		'Pulse_300x600_A': {'sz': [300, 600]},
+		//'Polls_Detail_300x250_A': { 'sz': [[300, 250], [300, 600]], 'npt': 1 },
+		//'Poll_300x250_A': { 'sz': [[300, 250], [300, 600]], 'npt': 1 },
+		//'SD_Story_1x1': { 'sz': [1, 1] },
+		'1x1': {'sz': [1, 1]}
+	};
+
+	//var network_path = '/41014381/Slashdot/';
+	var network_path = '/41014381/Slashdot/';
+	var tag_name_prefix = 'SD';
+	var tag_name_linkage = '_';
+	var tag_name_pagetype = page_type(location);
+	var tag_topic = page_section(location);
+	if (tag_name_pagetype == 'poll') {
+		tag_name_pagetype = 'Poll';
+	}
+	var before_tag_pagetyped = network_path
+		+ tag_name_prefix
+		+ tag_name_linkage
+		+ tag_name_pagetype
+		+ tag_name_linkage
+	;
+	var before_tag_pagetypeless = network_path
+		+ tag_name_prefix
+		+ tag_name_linkage
+		/* + tag_name_pagetype */
+		/* + tag_name_linkage */
+	;
+
+		//can be safely called
+		googletag.cmd.push(function () {
+
+			function remove_sticky_top() {
+				setTimeout(function () {
+					$('#div-gpt-ad-728x90_a').parent('div').addClass('adwrap-viewed-banner');
+					$('#div-gpt-ad-728x90_a').addClass('viewableImpression');
+				}, 1000);
+			}
+
+			function remove_sticky_railad() {
+				setTimeout(function () {
+					$('#slashboxes .adwrap-unviewed').addClass('adwrap-viewed-railad');
+					$('.railad').addClass('viewableImpression');
+				}, 1000);
+			}
+
+			function viewable_imp(slot) {
+				for (var i in slot) {
+					remove_sticky_top();
+					remove_sticky_railad();
+					if (typeof slot[i] !== 'string') continue;
+					switch (slot[i]) {
+						//case "/41014381/Slashdot/SD_homepage_728x90_A":
+						//case "/41014381/Slashdot/SD_story_728x90_A":
+						//case "/41014381/Slashdot/SD_Poll_728x90_A":
+						//case "/41014381/Slashdot/SD_homepage_728x90_Ref_A":
+						//case "/41014381/Slashdot/SD_story_728x90_Ref_A":
+						//case "/41014381/Slashdot/SD_Poll_728x90_Ref_A":
+						//remove_sticky_top();
+						//break;
+						//case "/41014381/Slashdot/SD_homepage_300x250_A":
+						//case "/41014381/Slashdot/SD_story_300x250_A":
+						//case "/41014381/Slashdot/SD_Poll_300x250_A":
+						//case "/41014381/Slashdot/SD_homepage_300x250_Ref_A":
+						//case "/41014381/Slashdot/SD_story_300x250_Ref_A":
+						//case "/41014381/Slashdot/SD_Poll_300x250_Ref_A":
+						//remove_sticky_railad();
+						//break;
+					}
+					//if(slot[i] === "/41014381/Slashdot/SD_homepage_728x90_A") remove_sticky_top();
+					//if(slot[i] === "/41014381/Slashdot/SD_homepage_300x250_A") remove_sticky_railad();
+				}
+			}
+
+			function define_me_a_slot(tag) {
+				if (tags[tag].skip && tags[tag].skip[tag_name_pagetype])
+					return;
+				var sandbox_regex = /\.xb\.sf\.net$/i;
+				var full_name = tags[tag].npt  // "no page type"
+					? before_tag_pagetypeless + tag
+					: before_tag_pagetyped + tag
+				;
+				var div_id = 'div-gpt-ad-' + tag.toLowerCase();
+				// extend jQuery and get URL query params
+				jQuery.extend({
+					getQueryParameters: function (str) {
+						return (str || document.location.search).replace(/(^\?)/, '').split("&").map(function (n) {
+							return n = n.split("="), this[n[0]] = n[1], this
+						}.bind({}))[0];
+					}
+				});
+
+				var queryParams = $.getQueryParameters();
+
+				if (queryParams.source === 'autorefresh') {
+					full_name = full_name.replace(/(\d+x\d+)/, '$1_Ref');
+					//console.log('TAG NAME: ', full_name);
+				}
+
+				var slot = googletag.defineSlot(
+					full_name,
+					tags[tag].sz,
+					div_id
+				);
+
+				service = slot.addService(googletag.pubads());
+
+				window.SD.Ads.slotsById[div_id] = slot;
+				window.SD.Ads.idsByPath[full_name] = div_id;
+
+				service.setTargeting('sz', tags[tag].sz);
+
+
+				var frontend_tpc = tag_topic.split(",");
+				var backend_tpc = [  ];
+
+				var tpc_final = unique_tpc_array(frontend_tpc, backend_tpc);
+				service.setTargeting('tpc', tpc_final);
+				if (location.hostname.match(sandbox_regex)) {
+					service.setTargeting('test', 'adops');
+				}
+
+			}
+
+		for (tag in tags) {
+			define_me_a_slot(tag, false);
+		}
+
+
+			googletag.pubads().addEventListener('slotVisibilityChanged', window.SD.Ads.visibilityChangedTracker);
+
+
+		googletag.pubads().addEventListener('impressionViewable', function(event) {
+			viewable_imp(event.slot);
+		    });
+
+                googletag.pubads().setTargeting('requestSource', 'GPT');
+		googletag.pubads().enableAsyncRendering();
+
+
+		googletag.pubads().collapseEmptyDivs();
+		window.bizxPrebid.SAFEFRAMES = true;
+		window.SD.Ads.setupAdRefresh();
+		bizxPrebid.Ads.pushToGoogle();
+		googletag.enableServices();
+	});
+})();
+
+
+/* Ad-Refresh code */
+window.SD.Ads.visibilityChangedTracker = function(event) {
+	var id = event.slot.getSlotElementId();
+	if (!window.SD.Ads.visibleTime.hasOwnProperty(id)) {
+		window.SD.Ads.visibleTime[id] = {
+			visible: false,
+			prevVisibleTotal: 0,
+			wasVisibleBeforePageBgd: false,
+			reloadCount: 0
+		};
+	}
+	var timeinfo = window.SD.Ads.visibleTime[id];
+	if (event.inViewPercentage >= 50 && !document.hidden) {
+		if (!timeinfo.visible) {
+			timeinfo.visible = performance.now();
+		}
+	} else {
+		if (timeinfo.visible) {
+			timeinfo.prevVisibleTotal += performance.now() - timeinfo.visible;
+			timeinfo.visible = false;
+		}
+	}
+};
+
+window.SD.Ads.setupAdRefresh = function() {
+	document.addEventListener('visibilitychange', function () {
+		for (var id in window.SD.Ads.visibleTime) {
+			if (window.SD.Ads.visibleTime.hasOwnProperty(id)) {
+				var timeinfo = window.SD.Ads.visibleTime[id];
+				if (document.hidden) {
+					timeinfo.wasVisibleBeforePageBgd = !!timeinfo.visible;
+					if (timeinfo.visible) {
+						timeinfo.prevVisibleTotal += performance.now() - timeinfo.visible;
+						timeinfo.visible = false;
+					}
+				} else if (!document.hidden && timeinfo.wasVisibleBeforePageBgd) {
+					timeinfo.visible = performance.now();
+				}
+			}
+		}
+	}, false);
+
+	// after 30 sec, start checking every second for reload
+	var LIMIT_MS = 30000;
+	setTimeout(function () {
+		//
+		setInterval(function () {
+			if (document.hidden) {
+				return;
+			}
+			for (var id in window.SD.Ads.visibleTime) {
+				if (window.SD.Ads.visibleTime.hasOwnProperty(id)) {
+					var timeinfo = window.SD.Ads.visibleTime[id];
+					if (timeinfo.visible &&
+						timeinfo.prevVisibleTotal + (performance.now() - timeinfo.visible) >= LIMIT_MS &&
+						timeinfo.reloadCount < 50
+					) {
+						timeinfo.reloadCount++;
+						timeinfo.visible = false;
+						timeinfo.prevVisibleTotal = 0;
+						window.SD.Ads.Helpers.refreshBids([id]);
+					}
+				}
+			}
+		}, 1000);
+	}, LIMIT_MS);
+};
+
+window.SD.Ads.Helpers.refreshBids = function (reloadIds) {
+		console.log('AD REFRESH: refreshBids', reloadIds);
+		pbjs.que.push(function () {
+			for (var i = reloadIds.length-1; i >= 0; i--) {
+				var id = reloadIds[i];
+				// clear out winner status from earlier auctions
+				if (bizxPrebid.Ads.prebidWinners[id]) {
+					delete bizxPrebid.Ads.prebidWinners[id];
+				}
+				// if has complement (hubicon), remove it since they are just house ads and can cause funky layouts if this leaderboard is refreshed to a different size
+				var path = window.SD.Ads.slotsById[id].getAdUnitPath();
+				/*var complement = gptadComplements[path];
+				if (complement) {
+					var complement_shortname = complement[0];
+					var complement_path = "/41014381/SD/" + complement_shortname;
+					var slot = window.SD.Ads.slotsById[window.SD.Ads.idsByPath[complement_path]];
+					if (slot) {
+						googletag.destroySlots([slot]);
+						var $wrappedAd = $(window.SD.Ads.Helpers.getContainerIDFromPath(complement_path));
+						$wrappedAd.remove();
+						delete gptadComplements[path];
+					}
+				}*/
+
+			}
+
+			pbjs.requestBids({
+				timeout: window.bizxPrebid.PREBID_TIMEOUT,
+				adUnitCodes: reloadIds,
+				bidsBackHandler: function () {
+					var reloadSlots = reloadIds.map(function(id) { return window.SD.Ads.slotsById[id]; });
+
+					// clear out previous sizing attrs, as they may change after refresh
+/*
+					for (var i = 0; i < reloadSlots.length; i++) {
+						var $wrappedAd = $(window.SD.Ads.Helpers.getContainerIDFromPath(reloadSlots[i].getAdUnitPath()));
+						var classes = $wrappedAd.attr('class').split(' ');
+						for (var j = 0; j < classes.length; j++) {
+							if (classes[j].indexOf('sz_') >= 0) {
+								$wrappedAd.removeClass(classes[j]);
+							}
+						}
+					}
+*/
+					pbjs.setTargetingForGPTAsync(reloadIds);
+					googletag.pubads().refresh(reloadSlots);
+				}
+			});
+		});
+	}
+</script>
+
+<!-- CrossPixel -->
+<script type="text/javascript">
+if (window.is_euro_union === 0) {
+    bizx.cmp.ifConsent('', ['all'], function(){
+        try{(function(){ var cb = new Date().getTime(); var s = document.createElement("script"); s.defer = true; s.src = "//tag.crsspxl.com/s1.js?d=2397&cb="+cb; var s0 = document.getElementsByTagName('script')[0]; s0.parentNode.insertBefore(s, s0); })();}catch(e){}
+    });
+}
+</script>
+
+
+
+
+<!-- AdBlock Check -->
+<script>
+var isAdBlockActive = true;
+</script>
+<script async src="//a.fsdn.com/sd/js/scripts/ad.js?e7edabf395ad3b0a"></script>
+</head>
+
+<body class="anon archive ">
+<!-- SMACKS: NEW CSS -->
+<link rel="stylesheet" href="//a.fsdn.com/sd/css/app.css?e7edabf395ad3b0a">
+<div id="top_parent"></div><a name="topothepage"></a>
+
+
+<div class="container">
+    <div class="nav-wrap">
+        <nav class="nav-primary" role="navigation" aria-label="Global Navigation">
+            <h1 class="logo">
+                <a href="//slashdot.org"><span>Slashdot</span></a>
+            </h1>
+
+            <ul class="nav-site">
+                <li><a href="//slashdot.org"><i class="icon-book" title="Stories"></i><span>Stories</span></a></li>
+                <li>
+                    <ul class="filter-firehose">
+                        <li class="nav-label">Firehose <i class="icon-angle-right"></i></li>
+                        <li><a href="//slashdot.org/recent">All</a></li>
+                        <li><a href="//slashdot.org/popular">Popular</a></li>
+                    </ul>
+                </li>
+                <li><a href="//slashdot.org/polls"><i class="icon-chart-bar" title="Polls"></i><span>Polls</span></a></li>
+
+                <!--
+                <li><a href="//ask.slashdot.org"><i class="icon-question-circle"></i><span>Ask</span></a></li>
+
+                <li><a href="//events.slashdot.org"><i class="icon-calendar"></i><span>Events</span></a></li>
+                -->
+                <li><a href="http://deals.slashdot.org/?utm_source=slashdot&amp;utm_medium=navbar&amp;utm_campaign=dealshp_1" target="_blank"><i class="sd-mini" title="Deals"></i> <span>Deals</span></a></li>
+                <li><a href="https://www.slashdotstore.com" rel="nofollow"><span>Apparel</span></a></li>
+            </ul>
+            <a href="//slashdot.org/submission" class="btn btn-success">Submit</a>
+        </nav>
+        <nav class="nav-user" role="navigation" aria-label="user access and account controls">
+            <form id="search" class="form-inline nav-search-form" method="get" action="//slashdot.org/index2.pl">
+                <!-- //slashdot.org/index2.pl" -->
+                <div class="form-group">
+                    <label class="sr-only" for="sitesearch">Search Slashdot</label>
+                    <div class="input-group">
+                        <input type="text" id="" class="" name="fhfilter" value="" placeholder="Search">
+                    </div>
+                </div>
+                <button type="submit" class="btn icon-search"></button>
+            </form>
+            <ul class="user-access">
+
+
+                <li >
+                    <a href="//slashdot.org/my/login"  onclick="show_login_box(); return false;"><i class="icon-login"></i><span> Login</span></a>
+
+                </li>
+
+
+
+                <li class="nav-label">or</li>
+
+
+
+                <li >
+                    <a href="//slashdot.org/my/newuser"  ><i class="icon-user-add"></i><span> Sign up</span></a>
+
+                </li>
+
+
+            </ul>
+        </nav>
+    </div>
+    <div class="nav-secondary-wrap">
+        <nav class="nav-secondary" role="secondary-navigation">
+            <ul>
+                <li class="nav-label">Topics: </li>
+                <li><a href="//devices.slashdot.org">Devices</a></li>
+                <li><a href="//build.slashdot.org">Build</a></li>
+                <li><a href="//entertainment.slashdot.org">Entertainment</a></li>
+                <li><a href="//technology.slashdot.org">Technology</a></li>
+                <li><a href="//slashdot.org/?fhfilter=opensource">Open Source</a></li>
+                <li><a href="//science.slashdot.org">Science</a></li>
+                <li><a href="//yro.slashdot.org">YRO</a></li>
+                <!-- <li><a href="//slashdot.org/topics.pl">more...</a></li> -->
+            </ul>
+        </nav>
+        <nav class="nav-social" role="social navigation">
+            <ul>
+                <li class="nav-label">Follow us:</li>
+                <li><a href="http://rss.slashdot.org/Slashdot/slashdotMain" target="_blank" rel="nofollow"><i class="icon-rss-squared"></i><span class="sr-only">RSS</span></a></li>
+                <li><a href="http://www.facebook.com/slashdot" target="_blank" rel="nofollow"><i class="icon-facebook-squared"></i><span class="sr-only">Facebook</span></a></li>
+                <li><a href="https://www.linkedin.com/company/slashdot" target="_blank" rel="nofollow"><i class="icon-linkedin-squared"></i><span class="sr-only">Google+</span></a></li>
+                <li><a href="http://twitter.com/slashdot" target="_blank" rel="nofollow"><i class="icon-twitter-squared"></i><span class="sr-only">Twitter</span></a></li>
+                <li><a href="https://www.youtube.com/channel/UCsW36751Gy-EAbHQwe9WBNw" target="_blank" rel="nofollow"><i class="icon-youtube-squared">
+                    <!-- width="1792" height="1792" -->
+                    <svg viewBox="0 260 1792 1260" xmlns="http://www.w3.org/2000/svg"><path d="M711 1128l484-250-484-253v503zm185-862q168 0 324.5 4.5t229.5 9.5l73 4q1 0 17 1.5t23 3 23.5 4.5 28.5 8 28 13 31 19.5 29 26.5q6 6 15.5 18.5t29 58.5 26.5 101q8 64 12.5 136.5t5.5 113.5v176q1 145-18 290-7 55-25 99.5t-32 61.5l-14 17q-14 15-29 26.5t-31 19-28 12.5-28.5 8-24 4.5-23 3-16.5 1.5q-251 19-627 19-207-2-359.5-6.5t-200.5-7.5l-49-4-36-4q-36-5-54.5-10t-51-21-56.5-41q-6-6-15.5-18.5t-29-58.5-26.5-101q-8-64-12.5-136.5t-5.5-113.5v-176q-1-145 18-290 7-55 25-99.5t32-61.5l14-17q14-15 29-26.5t31-19.5 28-13 28.5-8 23.5-4.5 23-3 17-1.5q251-18 627-18z"/></svg>
+                </i><span class="sr-only">Youtube</span></a></li>
+                <li><a href="//slashdot.org/newsletter" target="_blank" rel="nofollow"><i class="icon-mail-squared"></i><span class="sr-only">Newsletter</span></a></li>
+            </ul>
+        </nav>
+    </div>
+</div>
+
+
+
+<section id="fix">
+    <section class="container smack-refactor">
+
+
+        <div id='embbeded_login_modal' class="hide">
+            <form action="https://slashdot.org/my/login" method="post" onsubmit="if (global_returnto) { this.returnto.value = global_returnto }" class="embedded"><fieldset style="-webkit-border-radius:10px 10px 0 0;border-radius:10px 10px 0 0;-moz-border-radius:10px 10px 0 0">
+                <div style='height:25px;'>&nbsp;</div>
+                <input type="hidden" name="returnto" value="">
+                <input type="hidden" name="op" value="userlogin">
+                <p>
+                    <label class="fleft" for="unickname">Nickname:</label>
+                    <input type="text" name="unickname" value="">
+                </p>
+                <p>
+                    <label class="fleft" for="upasswd">Password:</label>
+                    <input type="password" name="upasswd">
+                </p>
+                <label class="checkbox"><input type="checkbox" name="login_temp" value="yes"> Public Terminal</label>
+                <br>
+                <hr>
+                <input type="submit" name="userlogin" value="Log In" class="fno"> <a href="//slashdot.org/my/mailpassword" class="btn link" onclick="getModalPrefs('sendPasswdModal', 'Retrieve Password', 1); return false;">Forgot your password?</a>
+            </fieldset></form>
+
+            <div class="actions">
+                <a class="ico close" onclick="hide_login_slider();" href=""><span>Close</span></a>
+            </div>
+        </div>
+
+
+        <div class="col_2">
+            <section class="grid_24" id="content">
+                <section id="firehose">
+                    <div class="grid_24" >
+
+
+                        <!-- header type=legacy begin --><ul id="story_archive_opts">Story Archive by:
+                        <li><a href="//slashdot.org/archive.pl?op=topics">Topic</a><span></span></li>
+                        <li><a href="//slashdot.org/archive.pl?op=sections">Section</a><span></span></li>
+                        <li class="active"><a href="//slashdot.org/archive.pl?op=bytime">Chronological Order</a><span></span></li>
+                        <li><a href="/archive.pl">Last Week</a><span></span></li>
+                    </ul>
+
+
+
+
+                        <ul id="story_archive_opts_year">
+                            Filter to year:
+
+                            <li class="active"><a href="//slashdot.org/archive.pl?op=bytime&amp;keyword=&amp;year=2021">2021</a><span></span></li>
+
+
+                            <li><a href="//slashdot.org/archive.pl?op=bytime&amp;keyword=&amp;year=2020">2020</a><span></span></li>
+
+
+                            <li><a href="//slashdot.org/archive.pl?op=bytime&amp;keyword=&amp;year=2019">2019</a><span></span></li>
+
+
+                            <li><a href="//slashdot.org/archive.pl?op=bytime&amp;keyword=&amp;year=2018">2018</a><span></span></li>
+
+
+                            <li><a href="//slashdot.org/archive.pl?op=bytime&amp;keyword=&amp;year=2017">2017</a><span></span></li>
+
+
+                            <li><a href="//slashdot.org/archive.pl?op=bytime&amp;keyword=&amp;year=2016">2016</a><span></span></li>
+
+
+                            <li><a href="//slashdot.org/archive.pl?op=bytime&amp;keyword=&amp;year=2015">2015</a><span></span></li>
+
+
+                            <li><a href="//slashdot.org/archive.pl?op=bytime&amp;keyword=&amp;year=2014">2014</a><span></span></li>
+
+
+                            <li><a href="//slashdot.org/archive.pl?op=bytime&amp;keyword=&amp;year=2013">2013</a><span></span></li>
+
+
+                            <li><a href="//slashdot.org/archive.pl?op=bytime&amp;keyword=&amp;year=2012">2012</a><span></span></li>
+
+
+                            <li><a href="//slashdot.org/archive.pl?op=bytime&amp;keyword=&amp;year=2011">2011</a><span></span></li>
+
+
+                            <li><a href="//slashdot.org/archive.pl?op=bytime&amp;keyword=&amp;year=2010">2010</a><span></span></li>
+
+
+                            <li><a href="//slashdot.org/archive.pl?op=bytime&amp;keyword=&amp;year=2009">2009</a><span></span></li>
+
+
+                            <li><a href="//slashdot.org/archive.pl?op=bytime&amp;keyword=&amp;year=2008">2008</a><span></span></li>
+
+
+                            <li><a href="//slashdot.org/archive.pl?op=bytime&amp;keyword=&amp;year=2007">2007</a><span></span></li>
+
+
+                            <li><a href="//slashdot.org/archive.pl?op=bytime&amp;keyword=&amp;year=2006">2006</a><span></span></li>
+
+
+                            <li><a href="//slashdot.org/archive.pl?op=bytime&amp;keyword=&amp;year=2005">2005</a><span></span></li>
+
+
+                            <li><a href="//slashdot.org/archive.pl?op=bytime&amp;keyword=&amp;year=2004">2004</a><span></span></li>
+
+
+                            <li><a href="//slashdot.org/archive.pl?op=bytime&amp;keyword=&amp;year=2003">2003</a><span></span></li>
+
+
+                            <li><a href="//slashdot.org/archive.pl?op=bytime&amp;keyword=&amp;year=2002">2002</a><span></span></li>
+
+
+                            <li><a href="//slashdot.org/archive.pl?op=bytime&amp;keyword=&amp;year=2001">2001</a><span></span></li>
+
+
+                            <li><a href="//slashdot.org/archive.pl?op=bytime&amp;keyword=&amp;year=2000">2000</a><span></span></li>
+
+
+                            <li><a href="//slashdot.org/archive.pl?op=bytime&amp;keyword=&amp;year=1999">1999</a><span></span></li>
+
+
+                            <li><a href="//slashdot.org/archive.pl?op=bytime&amp;keyword=&amp;year=1998">1998</a><span></span></li>
+
+
+                        </ul>
+                        <h1>Slashdot Stories for 2021</h1>
+
+
+
+
+
+
+
+                        <nav class="abdb">
+
+                            <div class="archive_breaks before"><div class="slant"></div><span>June  9 2021</span></div>
+                        </nav>
+
+
+                        <a href="//slashdot.org/story/21/06/09/184247/president-of-el-salvador-says-he-is-working-to-offer-bitcoin-mining-facilities-with-cheap-100-clean-and-renewable-energy-from-volcanos">President of El Salvador Says He is Working To Offer Bitcoin Mining Facilities With Cheap, 100% Clean and Renewable Energy From Volcanos</a> <span class="cmntcnt"><span class="slant"></span><span>4<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//science.slashdot.org/story/21/06/09/1754229/biden-administration-to-buy-500-million-pfizer-coronavirus-vaccine-doses-to-donate-to-the-world">Biden Administration To Buy 500 Million Pfizer Coronavirus Vaccine Doses To Donate To the World</a> <span class="cmntcnt"><span class="slant"></span><span>22<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//tech.slashdot.org/story/21/06/09/1712221/one-fastly-customer-triggered-internet-meltdown">One Fastly Customer Triggered Internet Meltdown</a> <span class="cmntcnt"><span class="slant"></span><span>16<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//science.slashdot.org/story/21/06/09/1649201/whale-that-travelled-halfway-around-the-world-sets-migration-record">Whale That Travelled Halfway Around the World Sets Migration Record</a> <span class="cmntcnt"><span class="slant"></span><span>10<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//news.slashdot.org/story/21/06/09/167243/white-house-launches-task-force-to-address-supply-chain-disruptions">White House Launches Task Force To Address Supply Chain Disruptions</a> <span class="cmntcnt"><span class="slant"></span><span>44<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//science.slashdot.org/story/21/06/09/1528231/china-is-vaccinating-a-staggering-20-million-people-a-day">China is Vaccinating a Staggering 20 Million People a Day</a> <span class="cmntcnt"><span class="slant"></span><span>93<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//news.slashdot.org/story/21/06/09/1423244/biden-to-revoke-and-replace-trumps-executive-order-that-sought-to-ban-tiktok">Biden To Revoke and Replace Trump's Executive Order That Sought To Ban TikTok</a> <span class="cmntcnt"><span class="slant"></span><span>80<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//science.slashdot.org/story/21/06/09/1351210/microscopic-animal-revived-after-slumbering-in-arctic-permafrost-for-24000-years">Microscopic Animal Revived After Slumbering in Arctic Permafrost for 24,000 Years</a> <span class="cmntcnt"><span class="slant"></span><span>20<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//tech.slashdot.org/story/21/06/09/0750233/google-will-let-rivals-appear-as-default-search-engine-options-on-android-for-free">Google Will Let Rivals Appear As Default Search Engine Options On Android For Free</a> <span class="cmntcnt"><span class="slant"></span><span>6<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//entertainment.slashdot.org/story/21/06/09/0739253/is-hbo-max-broken">Is HBO Max Broken?</a> <span class="cmntcnt"><span class="slant"></span><span>63<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//news.slashdot.org/story/21/06/09/0727217/national-geographic-recognizes-new-5th-ocean">National Geographic Recognizes New 5th Ocean</a> <span class="cmntcnt"><span class="slant"></span><span>47<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//slashdot.org/story/21/06/09/0646257/el-salvador-becomes-first-country-to-adopt-bitcoin-as-legal-tender-after-passing-law">El Salvador Becomes First Country To Adopt Bitcoin as Legal Tender After Passing Law</a> <span class="cmntcnt"><span class="slant"></span><span>125<span class="hide"> comments</span></span></span><br>
+
+
+
+
+                        <nav class="abdb">
+
+                            <div class="archive_breaks after"><div class="slant"></div><span>June  9 2021</span></div>
+
+                            <div class="archive_breaks before"><div class="slant"></div><span>June  8 2021</span></div>
+                        </nav>
+
+
+                        <a href="//news.slashdot.org/story/21/06/08/228237/carbon-dioxide-reaches-highest-level-in-4-million-years">Carbon Dioxide Reaches Highest Level In 4 Million Years</a> <span class="cmntcnt"><span class="slant"></span><span>160<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//hardware.slashdot.org/story/21/06/08/220238/ultra-high-density-hdds-made-with-graphene-store-ten-times-more-data">Ultra-High-Density HDDs Made With Graphene Store Ten Times More Data</a> <span class="cmntcnt"><span class="slant"></span><span>54<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//apple.slashdot.org/story/21/06/08/2156200/apple-brings-back-magnifying-glass-for-selecting-text-in-ios-15">Apple Brings Back Magnifying Glass For Selecting Text In iOS 15</a> <span class="cmntcnt"><span class="slant"></span><span>13<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//news.slashdot.org/story/21/06/08/2149207/tax-details-of-us-super-rich-allegedly-leaked">Tax Details of US Super-Rich Allegedly Leaked</a> <span class="cmntcnt"><span class="slant"></span><span>304<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//tech.slashdot.org/story/21/06/08/1955238/ohio-files-lawsuit-to-declare-google-a-public-utility">Ohio Files Lawsuit To Declare Google a Public Utility</a> <span class="cmntcnt"><span class="slant"></span><span>73<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//hardware.slashdot.org/story/21/06/08/1948234/mcdonalds-starts-testing-automated-drive-thru-ordering">McDonald's Starts Testing Automated Drive-Thru Ordering</a> <span class="cmntcnt"><span class="slant"></span><span>121<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//tech.slashdot.org/story/21/06/08/1938202/kde-plasma-522-released">KDE Plasma 5.22 Released</a> <span class="cmntcnt"><span class="slant"></span><span>10<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//it.slashdot.org/story/21/06/08/1939249/ransomware-struck-another-pipeline-firm----and-70gb-of-data-leaked">Ransomware Struck Another Pipeline Firm -- and 70GB of Data Leaked</a> <span class="cmntcnt"><span class="slant"></span><span>23<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//hardware.slashdot.org/story/21/06/08/1932246/us-pc-shipments-soar-73-in-the-first-quarter-as-apple-falls-from-top-spot">US PC Shipments Soar 73% In the First Quarter As Apple Falls From Top Spot</a> <span class="cmntcnt"><span class="slant"></span><span>70<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//science.slashdot.org/story/21/06/08/1921228/a-bubble-barrier-is-trapping-plastic-waste-before-it-can-get-into-the-sea">A 'Bubble Barrier' is Trapping Plastic Waste Before It Can Get Into the Sea</a> <span class="cmntcnt"><span class="slant"></span><span>27<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//it.slashdot.org/story/21/06/08/1824223/fbi-and-australian-police-ran-an-encrypted-chat-platform-to-catch-criminal-gangs">FBI and Australian Police Ran an Encrypted Chat Platform To Catch Criminal Gangs</a> <span class="cmntcnt"><span class="slant"></span><span>83<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//yro.slashdot.org/story/21/06/08/183215/europes-ai-rules-open-door-to-mass-use-of-facial-recognition-critics-warn">Europe's AI Rules Open Door To Mass Use of Facial Recognition, Critics Warn</a> <span class="cmntcnt"><span class="slant"></span><span>14<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//games.slashdot.org/story/21/06/08/1641219/playdate-the-console-with-a-crank-gets-july-preorder-for-179-game-details">Playdate, the Console With a Crank, Gets July Preorder for $179, Game Details</a> <span class="cmntcnt"><span class="slant"></span><span>49<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//news.slashdot.org/story/21/06/08/1644200/ransomware-hits-capitol-hill-contractor">Ransomware Hits Capitol Hill Contractor</a> <span class="cmntcnt"><span class="slant"></span><span>36<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//tech.slashdot.org/story/21/06/08/161234/russia-puts-the-squeeze-on-social-media-to-police-its-critics">Russia Puts the Squeeze on Social Media to Police Its Critics</a> <span class="cmntcnt"><span class="slant"></span><span>62<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//apple.slashdot.org/story/21/06/08/1523250/apples-new-private-relay-feature-will-not-be-available-in-china">Apple's New 'Private Relay' Feature Will Not Be Available in China</a> <span class="cmntcnt"><span class="slant"></span><span>67<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//tech.slashdot.org/story/21/06/08/1448246/google-bows-to-eu-rivals-with-android-choice-screen-tweaks">Google Bows To EU, Rivals With Android Choice-Screen Tweaks</a> <span class="cmntcnt"><span class="slant"></span><span>15<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//tech.slashdot.org/story/21/06/08/1046240/a-big-chunk-of-the-internet-goes-offline-because-of-a-faulty-cdn-provider">A Big Chunk of the Internet Goes Offline Because of a Faulty CDN Provider</a> <span class="cmntcnt"><span class="slant"></span><span>154<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//yro.slashdot.org/story/21/06/08/0126240/twitter-restricts-accounts-in-india-to-comply-with-government-legal-request">Twitter Restricts Accounts In India To Comply With Government Legal Request</a> <span class="cmntcnt"><span class="slant"></span><span>48<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//science.slashdot.org/story/21/06/07/2245255/engineers-at-mit-have-created-actual-programmable-fibers">Engineers At MIT Have Created Actual Programmable Fibers</a> <span class="cmntcnt"><span class="slant"></span><span>23<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//tech.slashdot.org/story/21/06/08/0050237/drone-refuels-us-navy-fighter-jet-in-midair-for-the-first-time">Drone Refuels US Navy Fighter Jet In Midair For the First Time</a> <span class="cmntcnt"><span class="slant"></span><span>103<span class="hide"> comments</span></span></span><br>
+
+
+
+
+                        <nav class="abdb">
+
+                            <div class="archive_breaks after"><div class="slant"></div><span>June  8 2021</span></div>
+
+                            <div class="archive_breaks before"><div class="slant"></div><span>June  7 2021</span></div>
+                        </nav>
+
+
+                        <a href="//hardware.slashdot.org/story/21/06/07/2254227/reducing-poverty-can-actually-lower-energy-demand-finds-research">Reducing Poverty Can Actually Lower Energy Demand, Finds Research</a> <span class="cmntcnt"><span class="slant"></span><span>174<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//entertainment.slashdot.org/story/21/06/08/0058203/moviepass-settles-with-ftc-over-fraud-and-data-security-failures">MoviePass Settles With FTC Over Fraud and Data Security Failures</a> <span class="cmntcnt"><span class="slant"></span><span>28<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//developers.slashdot.org/story/21/06/07/2240223/swift-playgrounds-for-ipados-15-lets-you-build-apps-on-the-ipad-submit-them-to-the-app-store">Swift Playgrounds For iPadOS 15 Lets You Build Apps On the iPad, Submit Them To the App Store</a> <span class="cmntcnt"><span class="slant"></span><span>28<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//it.slashdot.org/story/21/06/07/2029200/pgp-turns-30">PGP Turns 30</a> <span class="cmntcnt"><span class="slant"></span><span>50<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//news.slashdot.org/story/21/06/07/2053234/microsofts-kate-crawford-ai-is-neither-artificial-nor-intelligent">Microsoft's Kate Crawford: 'AI Is Neither Artificial Nor Intelligent'</a> <span class="cmntcnt"><span class="slant"></span><span>166<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//tech.slashdot.org/story/21/06/07/2023240/facebook-wont-take-a-cut-from-creators-until-2023-zuckerberg-says-in-shot-at-apple">Facebook Won't Take a Cut From Creators Until 2023, Zuckerberg Says in Shot at Apple</a> <span class="cmntcnt"><span class="slant"></span><span>18<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//apple.slashdot.org/story/21/06/07/2015215/apple-announces-macos-monterey-the-next-mac-desktop-operating-system">Apple Announces macOS Monterey, the Next Mac Desktop Operating System</a> <span class="cmntcnt"><span class="slant"></span><span>52<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//yro.slashdot.org/story/21/06/07/2040223/notepad-drops-bing-after-tank-man-censorship-fiasco">Notepad++ Drops Bing After 'Tank Man' Censorship Fiasco</a> <span class="cmntcnt"><span class="slant"></span><span>133<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//yro.slashdot.org/story/21/06/07/204238/apple-wallet-will-support-ids-and-drivers-licenses-in-ios-15">Apple Wallet Will Support IDs and Driver's Licenses In iOS 15</a> <span class="cmntcnt"><span class="slant"></span><span>57<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//tech.slashdot.org/story/21/06/07/1955243/mozilla-launches-ideas-platform-to-improve-communication-with-its-userbase">Mozilla Launches Ideas Platform To Improve Communication With Its Userbase</a> <span class="cmntcnt"><span class="slant"></span><span>77<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//news.slashdot.org/story/21/06/07/1933213/us-recovers-millions-in-cryptocurrency-paid-to-colonial-pipeline-ransomware-hackers">US Recovers Millions in Cryptocurrency Paid To Colonial Pipeline Ransomware Hackers</a> <span class="cmntcnt"><span class="slant"></span><span>162<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//apple.slashdot.org/story/21/06/07/1846234/apple-announces-icloud-with-privacy-focused-features">Apple Announces iCloud+ With Privacy-focused Features</a> <span class="cmntcnt"><span class="slant"></span><span>34<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//apple.slashdot.org/story/21/06/07/184244/facetime-is-coming-to-android-and-windows-via-the-web">FaceTime is Coming To Android and Windows Via the Web</a> <span class="cmntcnt"><span class="slant"></span><span>52<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//science.slashdot.org/story/21/06/07/1727214/fda-approves-alzheimers-drug-despite-fierce-debate-over-whether-it-works">FDA Approves Alzheimer's Drug Despite Fierce Debate Over Whether It Works</a> <span class="cmntcnt"><span class="slant"></span><span>82<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//yro.slashdot.org/story/21/06/07/1658204/white-house-hires-broadband-expert">White House Hires Broadband Expert</a> <span class="cmntcnt"><span class="slant"></span><span>94<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//tech.slashdot.org/story/21/06/07/1615207/google-stadia-heads-to-chromecast-with-google-tv-android-tv-devices-on-june-23">Google Stadia Heads To Chromecast With Google TV, Android TV Devices on June 23</a> <span class="cmntcnt"><span class="slant"></span><span>12<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//it.slashdot.org/story/21/06/07/1535246/ukraine-warns-of-massive-russian-spear-phishing-campaign">Ukraine Warns of 'Massive' Russian Spear-Phishing Campaign</a> <span class="cmntcnt"><span class="slant"></span><span>23<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//science.slashdot.org/story/21/06/07/1446200/jeff-bezos-plans-to-travel-to-space-on-blue-origin-flight">Jeff Bezos Plans to Travel to Space on Blue Origin Flight</a> <span class="cmntcnt"><span class="slant"></span><span>131<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//tech.slashdot.org/story/21/06/07/140222/france-fines-google-268m-for-adtech-abuses-and-gets-interoperability-commitments">France Fines Google $268M for Adtech Abuses and Gets Interoperability Commitments</a> <span class="cmntcnt"><span class="slant"></span><span>9<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//apple.slashdot.org/story/21/06/06/2256239/is-apples-app-store-teeming-with-scams">Is Apple's App Store Teeming With Scams?</a> <span class="cmntcnt"><span class="slant"></span><span>130<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//science.slashdot.org/story/21/06/07/018205/will-the-us-air-force-use-spacexs-starship-for-speedy-cargo-deliveries">Will the US Air Force Use SpaceX's Starship for Speedy Cargo Deliveries?</a> <span class="cmntcnt"><span class="slant"></span><span>129<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//science.slashdot.org/story/21/06/07/0253208/a-new-type-of-covid-19-vaccine-could-debut-soon">A New Type Of COVID-19 Vaccine Could Debut Soon</a> <span class="cmntcnt"><span class="slant"></span><span>143<span class="hide"> comments</span></span></span><br>
+
+
+
+
+                        <nav class="abdb">
+
+                            <div class="archive_breaks after"><div class="slant"></div><span>June  7 2021</span></div>
+
+                            <div class="archive_breaks before"><div class="slant"></div><span>June  6 2021</span></div>
+                        </nav>
+
+
+                        <a href="//hardware.slashdot.org/story/21/06/07/0149224/sidewalk-robots-are-now-delivering-food-in-miami">Sidewalk Robots are Now Delivering Food in Miami</a> <span class="cmntcnt"><span class="slant"></span><span>74<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//news.slashdot.org/story/21/06/07/0021252/geologists-marvel-at-alaska-glaciers-rare-surge----up-to-60-feet-a-day">Geologists Marvel at Alaska Glacier's Rare 'Surge' -- Up to 60 Feet a Day</a> <span class="cmntcnt"><span class="slant"></span><span>94<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//mobile.slashdot.org/story/21/06/06/2156244/walmart-will-give-740000-employees-a-free-smartphone">Walmart Will Give 740,000 Employees a Free Smartphone</a> <span class="cmntcnt"><span class="slant"></span><span>116<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//tech.slashdot.org/story/21/06/06/2139224/windows-10-notifies-users-they-should-make-bing-their-browsers-default-search-engine">Windows 10 Notifies Users They Should Make Bing Their Browser's Default Search Engine</a> <span class="cmntcnt"><span class="slant"></span><span>114<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//hardware.slashdot.org/story/21/06/06/2034217/risc-vs-cisc-is-the-wrong-lens-for-comparing-modern-x86-arm-cpus">RISC Vs. CISC Is the Wrong Lens For Comparing Modern x86, ARM CPUs</a> <span class="cmntcnt"><span class="slant"></span><span>114<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//yro.slashdot.org/story/21/06/06/1935236/rom-site-owner-made-30000-a-year----now-owes-nintendo-21-million">ROM Site Owner Made $30,000 a Year -- Now Owes Nintendo $2.1 Million</a> <span class="cmntcnt"><span class="slant"></span><span>64<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//news.slashdot.org/story/21/06/06/1728234/will-labor-shortages-give-workers-more-power">Will Labor Shortages Give Workers More Power?</a> <span class="cmntcnt"><span class="slant"></span><span>172<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//apple.slashdot.org/story/21/06/06/1533242/apples-magsafe-devices-may-affect-pacemakers">Apple's MagSafe Devices May Affect Pacemakers</a> <span class="cmntcnt"><span class="slant"></span><span>15<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//yro.slashdot.org/story/21/06/06/0345224/eff-argues-if-not-overturned-a-bad-copyright-decision-will-lead-many-americans-to-lose-internet-access">EFF Argues 'If Not Overturned, a Bad Copyright Decision Will Lead Many Americans to Lose Internet Access'</a> <span class="cmntcnt"><span class="slant"></span><span>89<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//science.slashdot.org/story/21/06/05/2025218/proven-against-coronavirus-mrna-can-do-so-much-more">Proven Against Coronavirus, mRNA Can Do So Much More</a> <span class="cmntcnt"><span class="slant"></span><span>107<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//yro.slashdot.org/story/21/06/05/2341258/fbi-charges-woman-with-writing-code-for-trickbot-ransomware-gang">FBI Charges Woman With Writing Code For 'Trickbot' Ransomware Gang</a> <span class="cmntcnt"><span class="slant"></span><span>38<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//apple.slashdot.org/story/21/06/06/0049222/how-steve-jobs-wrote-the-most-important-email-in-the-history-of-business">How Steve Jobs Wrote 'the Most Important Email in the History of Business'</a> <span class="cmntcnt"><span class="slant"></span><span>88<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//science.slashdot.org/story/21/06/05/1727258/how-amazon-became-an-engine-for-anti-vaccine-misinformation">How Amazon Became an Engine For Anti-Vaccine Misinformation</a> <span class="cmntcnt"><span class="slant"></span><span>187<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//entertainment.slashdot.org/story/21/06/05/2158230/judges-ruling-calls-disneys-star-wars-sequels-mediocre-and-schlocky">Judge's Ruling Calls Disney's Star Wars Sequels 'Mediocre' and 'Schlocky'</a> <span class="cmntcnt"><span class="slant"></span><span>77<span class="hide"> comments</span></span></span><br>
+
+
+
+
+                        <nav class="abdb">
+
+                            <div class="archive_breaks after"><div class="slant"></div><span>June  6 2021</span></div>
+
+                            <div class="archive_breaks before"><div class="slant"></div><span>June  5 2021</span></div>
+                        </nav>
+
+
+                        <a href="//tech.slashdot.org/story/21/06/06/0120204/tiktok-detected-my-adhd-before-i-did">'TikTok Detected My ADHD Before I Did'</a> <span class="cmntcnt"><span class="slant"></span><span>94<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//news.slashdot.org/story/21/06/05/0423256/americas-fbi-withdraws-demand-for-ip-addresses-of-readers-of-a-newspapers-story-during-a-35-minute-window">America's FBI Withdraws Demand for IP Addresses of Readers of a Newspaper's Story During a 35-Minute Window</a> <span class="cmntcnt"><span class="slant"></span><span>256<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//tech.slashdot.org/story/21/06/05/0536225/why-its-a-big-deal-that-no-one-cares-about-the-next-version-of-windows">Why It's a Big Deal That No One Cares about the Next Version of Windows</a> <span class="cmntcnt"><span class="slant"></span><span>139<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//news.slashdot.org/story/21/06/05/2132257/el-salvador-worlds-first-country-to-adopt-bitcoin-as-legal-tender">El Salvador: World's First Country to Adopt Bitcoin as Legal Tender?</a> <span class="cmntcnt"><span class="slant"></span><span>82<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//hardware.slashdot.org/story/21/06/05/1648225/how-reliable-are-modern-cpus">How Reliable Are Modern CPUs?</a> <span class="cmntcnt"><span class="slant"></span><span>64<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//news.slashdot.org/story/21/06/05/1836227/giant-diamonds-may-hold-the-key-to-superdeep-earthquakes">Giant Diamonds May Hold the Key To Superdeep Earthquakes</a> <span class="cmntcnt"><span class="slant"></span><span>11<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//news.slashdot.org/story/21/06/05/019204/google-releases-open-source-insights-dependency-visualization-tool">Google Releases 'Open Source Insights' Dependency Visualization Tool</a> <span class="cmntcnt"><span class="slant"></span><span>11<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//news.slashdot.org/story/21/06/05/0246247/gcc-will-no-longer-require-copyrights-be-assigned-to-the-fsf">GCC Will No Longer Require Copyrights Be Assigned to the FSF</a> <span class="cmntcnt"><span class="slant"></span><span>63<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//developers.slashdot.org/story/21/06/04/2351258/github-honors-class-of-2021-with-github-yearbook-and-github-graduation-ceremony">GitHub Honors Class of 2021 with 'GitHub Yearbook' and 'GitHub Graduation' Ceremony</a> <span class="cmntcnt"><span class="slant"></span><span>8<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//science.slashdot.org/story/21/06/05/0511217/floridas-government-may-have-ignored-and-withheld-data-about-covid-19-cases">Florida's Government May Have Ignored and Withheld Data About Covid-19 Cases</a> <span class="cmntcnt"><span class="slant"></span><span>267<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//news.slashdot.org/story/21/06/05/032248/denmark-parliament-approves-giant-artificial-island-off-copenhagen">Denmark Parliament Approves Giant Artificial Island Off Copenhagen</a> <span class="cmntcnt"><span class="slant"></span><span>58<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//tech.slashdot.org/story/21/06/04/2059244/apple-mozilla-google-microsoft-form-group-to-standardize-browser-plug-ins">Apple, Mozilla, Google, Microsoft Form Group To Standardize Browser Plug-Ins</a> <span class="cmntcnt"><span class="slant"></span><span>57<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//science.slashdot.org/story/21/06/05/0254235/nasas-juno-to-get-a-close-look-at-jupiters-moon-ganymede">NASA's Juno To Get a Close Look At Jupiter's Moon Ganymede</a> <span class="cmntcnt"><span class="slant"></span><span>17<span class="hide"> comments</span></span></span><br>
+
+
+
+
+                        <nav class="abdb">
+
+                            <div class="archive_breaks after"><div class="slant"></div><span>June  5 2021</span></div>
+
+                            <div class="archive_breaks before"><div class="slant"></div><span>June  4 2021</span></div>
+                        </nav>
+
+
+                        <a href="//it.slashdot.org/story/21/06/05/0245238/hackers-breached-colonial-pipeline-using-compromised-password">Hackers Breached Colonial Pipeline Using Compromised Password</a> <span class="cmntcnt"><span class="slant"></span><span>112<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//tech.slashdot.org/story/21/06/04/2050212/after-years-of-detecting-land-mines-a-heroic-rat-is-hanging-up-his-sniffer">After Years of Detecting Land Mines, A Heroic Rat Is Hanging Up His Sniffer</a> <span class="cmntcnt"><span class="slant"></span><span>30<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//tech.slashdot.org/story/21/06/04/2044250/whatsapp-will-add-multi-device-support-introduce-view-once-disappearing-feature">WhatsApp Will Add Multi-Device Support, Introduce 'View Once' Disappearing Feature</a> <span class="cmntcnt"><span class="slant"></span><span>18<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//yro.slashdot.org/story/21/06/04/2040236/us-pentagon-changes-its-mind-about-dji-drones">US Pentagon Changes Its Mind About DJI Drones</a> <span class="cmntcnt"><span class="slant"></span><span>24<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//yro.slashdot.org/story/21/06/04/2025209/tech-scammer-who-fooled-cisco-microsoft-and-lenovo-out-of-millions-jailed-for-over-seven-years">Tech Scammer Who Fooled Cisco, Microsoft and Lenovo Out of Millions Jailed For Over Seven Years</a> <span class="cmntcnt"><span class="slant"></span><span>26<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//it.slashdot.org/story/21/06/04/2017258/freakout-malware-worms-its-way-into-vulnerable-vmware-services">FreakOut Malware Worms Its Way Into Vulnerable VMware Services</a> <span class="cmntcnt"><span class="slant"></span><span>16<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//mobile.slashdot.org/story/21/06/04/2011259/carriers-agree-to-start-sharing-vertical-location-data-for-911-calls">Carriers Agree To Start Sharing Vertical Location Data For 911 Calls</a> <span class="cmntcnt"><span class="slant"></span><span>23<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//hardware.slashdot.org/story/21/06/04/205207/apple-working-on-ipad-pro-with-wireless-charging-new-ipad-mini">Apple Working On iPad Pro With Wireless Charging, New iPad Mini</a> <span class="cmntcnt"><span class="slant"></span><span>11<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//it.slashdot.org/story/21/06/04/1951228/startup-stealth-data-working-to-uncover-the-identities-of-website-users">Startup Stealth Data Working To Uncover the Identities of Website Users</a> <span class="cmntcnt"><span class="slant"></span><span>111<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//slashdot.org/story/21/06/04/1949228/bing-censors-image-search-for-tank-man-even-in-us">Bing Censors Image Search for 'Tank Man' Even in US</a> <span class="cmntcnt"><span class="slant"></span><span>179<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//apple.slashdot.org/story/21/06/04/1945212/apple-has-a-major-developer-relations-problem">Apple Has a Major Developer-Relations Problem</a> <span class="cmntcnt"><span class="slant"></span><span>79<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//science.slashdot.org/story/21/06/04/1918210/ancient-tsunami-could-have-wiped-out-scottish-cities-today-study-finds">Ancient Tsunami Could Have Wiped Out Scottish Cities Today, Study Finds</a> <span class="cmntcnt"><span class="slant"></span><span>28<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//news.slashdot.org/story/21/06/04/1848245/the-story-behind-many-bird-names">The Story Behind Many Bird Names</a> <span class="cmntcnt"><span class="slant"></span><span>101<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//yro.slashdot.org/story/21/06/04/183253/the-secret-behind-amazons-domination-in-cloud-computing">The Secret Behind Amazon's Domination in Cloud Computing</a> <span class="cmntcnt"><span class="slant"></span><span>35<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//tech.slashdot.org/story/21/06/04/1721216/trump-will-remain-off-facebook-for-at-least-two-years">Trump Will Remain Off Facebook For At Least Two Years</a> <span class="cmntcnt"><span class="slant"></span><span>243<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//tech.slashdot.org/story/21/06/04/1626227/nigeria-suspends-twitter-indefinitely-after-presidents-tweet-is-deleted">Nigeria Suspends Twitter Indefinitely After President's Tweet is Deleted</a> <span class="cmntcnt"><span class="slant"></span><span>94<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//yro.slashdot.org/story/21/06/04/1518228/dell-hit-with-fraud-case-over-alienware-area-51m-upgrade-claims">Dell Hit With Fraud Case Over Alienware Area-51m Upgrade Claims</a> <span class="cmntcnt"><span class="slant"></span><span>43<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//news.slashdot.org/story/21/06/04/1443259/biden-order-bans-investment-in-dozens-of-chinese-defense-tech-firms">Biden Order Bans Investment in Dozens of Chinese Defense, Tech Firms</a> <span class="cmntcnt"><span class="slant"></span><span>98<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//developers.slashdot.org/story/21/06/04/1427251/google-to-warn-of-chrome-extensions-from-new-or-untrusted-developers">Google To Warn of Chrome Extensions From New or Untrusted Developers</a> <span class="cmntcnt"><span class="slant"></span><span>13<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//news.slashdot.org/story/21/06/04/1348221/uk-and-eu-investigate-facebook-over-unfair-use-of-data-in-digital-advertising">UK and EU Investigate Facebook Over Unfair Use of Data in Digital Advertising</a> <span class="cmntcnt"><span class="slant"></span><span>6<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//yro.slashdot.org/story/21/06/04/0250205/tiktok-gives-itself-permission-to-collect-biometric-data-on-us-users-including-faceprints-and-voiceprints">TikTok Gives Itself Permission To Collect Biometric Data On US Users, Including 'Faceprints and Voiceprints'</a> <span class="cmntcnt"><span class="slant"></span><span>31<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//hardware.slashdot.org/story/21/06/04/0242235/7-11-is-opening-500-ev-charging-stations-by-the-end-of-2022">7-11 Is Opening 500 EV Charging Stations By the End of 2022</a> <span class="cmntcnt"><span class="slant"></span><span>167<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//science.slashdot.org/story/21/06/03/2133255/why-nasa-is-blasting-water-bears-and-bobtail-squid-into-space">Why NASA Is Blasting Water Bears And Bobtail Squid Into Space</a> <span class="cmntcnt"><span class="slant"></span><span>34<span class="hide"> comments</span></span></span><br>
+
+
+
+
+                        <nav class="abdb">
+
+                            <div class="archive_breaks after"><div class="slant"></div><span>June  4 2021</span></div>
+
+                            <div class="archive_breaks before"><div class="slant"></div><span>June  3 2021</span></div>
+                        </nav>
+
+
+                        <a href="//news.slashdot.org/story/21/06/03/2112252/sharks-nearly-went-extinct-19-million-years-ago-from-mystery-event">Sharks Nearly Went Extinct 19 Million Years Ago From Mystery Event</a> <span class="cmntcnt"><span class="slant"></span><span>74<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//games.slashdot.org/story/21/06/03/2121248/atari-vcs-game-console-finally-launches-june-15">Atari VCS Game Console Finally Launches June 15</a> <span class="cmntcnt"><span class="slant"></span><span>45<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//hardware.slashdot.org/story/21/06/03/213230/samsung-will-shut-down-the-v1-smartthings-hub-this-month">Samsung Will Shut Down the v1 SmartThings Hub This Month</a> <span class="cmntcnt"><span class="slant"></span><span>86<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//apple.slashdot.org/story/21/06/03/2052258/apple-wants-staff-back-in-offices-by-september">Apple Wants Staff Back In Offices By September</a> <span class="cmntcnt"><span class="slant"></span><span>208<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//tech.slashdot.org/story/21/06/03/2052251/facebook-to-end-special-treatment-for-politicians">Facebook To End Special Treatment for Politicians </a> <span class="cmntcnt"><span class="slant"></span><span>73<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//tech.slashdot.org/story/21/06/03/2032202/amazons-cost-saving-routing-algorithm-makes-drivers-walk-into-traffic">Amazon's Cost Saving Routing Algorithm Makes Drivers Walk Into Traffic</a> <span class="cmntcnt"><span class="slant"></span><span>91<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//yro.slashdot.org/story/21/06/03/2050239/using-fake-reviews-to-find-dangerous-extensions">Using Fake Reviews To Find Dangerous Extensions</a> <span class="cmntcnt"><span class="slant"></span><span>12<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//slashdot.org/story/21/06/03/2012200/miami-readies-for-largest-bitcoin-conference-in-history">Miami Readies For Largest Bitcoin Conference In History</a> <span class="cmntcnt"><span class="slant"></span><span>47<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//it.slashdot.org/story/21/06/03/2135250/live-streams-go-down-across-cox-radio-and-tv-stations-in-apparent-ransomware-attack">Live Streams Go Down Across Cox Radio and TV Stations in Apparent Ransomware Attack</a> <span class="cmntcnt"><span class="slant"></span><span>33<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//apple.slashdot.org/story/21/06/03/1957244/new-study-backs-up-finding-that-magsafe-can-interfere-with-medical-devices">New Study Backs Up Finding That MagSafe Can Interfere With Medical Devices</a> <span class="cmntcnt"><span class="slant"></span><span>62<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//politics.slashdot.org/story/21/06/03/1951215/microsoft-teams-up-with-voting-machine-maker-to-let-voters-track-ballots">Microsoft Teams Up With Voting Machine Maker To Let Voters Track Ballots</a> <span class="cmntcnt"><span class="slant"></span><span>108<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//news.slashdot.org/story/21/06/03/2011218/biden-administration-makes-1-billion-in-grants-available-for-broadband-on-tribal-lands">Biden Administration Makes $1 billion in Grants Available for Broadband on Tribal Lands</a> <span class="cmntcnt"><span class="slant"></span><span>42<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//news.slashdot.org/story/21/06/03/1920206/us-to-give-ransomware-hacks-similar-priority-as-terrorism">US To Give Ransomware Hacks Similar Priority as Terrorism</a> <span class="cmntcnt"><span class="slant"></span><span>66<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//apple.slashdot.org/story/21/06/03/1849221/apple-bolsters-airtags-privacy-measures-to-offer-android-detector-app-later-this-year">Apple Bolsters AirTags Privacy Measures, To Offer Android Detector App Later This Year</a> <span class="cmntcnt"><span class="slant"></span><span>20<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//slashdot.org/story/21/06/03/182204/blackstone-acquires-tech-publisher-idg-for-13-billion">Blackstone Acquires Tech Publisher IDG for $1.3 Billion</a> <span class="cmntcnt"><span class="slant"></span><span>3<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//news.slashdot.org/story/21/06/03/1731223/united-airlines-wants-to-bring-back-supersonic-air-travel">United Airlines Wants To Bring Back Supersonic Air Travel</a> <span class="cmntcnt"><span class="slant"></span><span>121<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//it.slashdot.org/story/21/06/03/1647223/fujifilm-becomes-the-latest-victim-of-a-network-crippling-ransomware-attack">Fujifilm Becomes the Latest Victim of a Network-Crippling Ransomware Attack</a> <span class="cmntcnt"><span class="slant"></span><span>39<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//news.slashdot.org/story/21/06/03/1612231/supreme-court-narrows-scope-of-cfaa-computer-hacking-law">Supreme Court Narrows Scope of CFAA Computer Hacking Law</a> <span class="cmntcnt"><span class="slant"></span><span>79<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//yro.slashdot.org/story/21/06/03/1558252/amazons-ring-will-ask-police-to-publicly-request-user-videos">Amazon's Ring Will Ask Police To Publicly Request User Videos</a> <span class="cmntcnt"><span class="slant"></span><span>41<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//slashdot.org/story/21/06/03/1450204/twitter-debuts-subscriptions-to-super-users-in-new-revenue-push">Twitter Debuts Subscriptions To 'Super Users' in New Revenue Push</a> <span class="cmntcnt"><span class="slant"></span><span>46<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//yro.slashdot.org/story/21/06/03/140255/google-is-making-it-harder-for-android-apps-to-track-you-once-youve-opted-out">Google is Making it Harder for Android Apps To Track You Once You've Opted Out</a> <span class="cmntcnt"><span class="slant"></span><span>16<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//it.slashdot.org/story/21/06/03/0351227/russian-cybercriminal-group-was-behind-meat-plant-attack-fbi-says">Russian Cybercriminal Group Was Behind Meat Plant Attack, FBI Says</a> <span class="cmntcnt"><span class="slant"></span><span>69<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//slashdot.org/story/21/06/03/0358213/norton-360-antivirus-now-lets-you-mine-ethereum-cryptocurrency">Norton 360 Antivirus Now Lets You Mine Ethereum Cryptocurrency</a> <span class="cmntcnt"><span class="slant"></span><span>66<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//science.slashdot.org/story/21/06/02/2126219/nasa-plans-blockbuster-return-to-venus">NASA Plans Blockbuster Return To Venus</a> <span class="cmntcnt"><span class="slant"></span><span>61<span class="hide"> comments</span></span></span><br>
+
+
+
+
+                        <nav class="abdb">
+
+                            <div class="archive_breaks after"><div class="slant"></div><span>June  3 2021</span></div>
+
+                            <div class="archive_breaks before"><div class="slant"></div><span>June  2 2021</span></div>
+                        </nav>
+
+
+                        <a href="//news.slashdot.org/story/21/06/02/2124205/g7-nations-committing-billions-more-to-fossil-fuel-than-green-energy">G7 Nations Committing Billions More To Fossil Fuel Than Green Energy</a> <span class="cmntcnt"><span class="slant"></span><span>203<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//hardware.slashdot.org/story/21/06/02/2119258/bill-gates-next-generation-nuclear-reactor-to-be-built-in-wyoming">Bill Gates' Next Generation Nuclear Reactor To Be Built In Wyoming</a> <span class="cmntcnt"><span class="slant"></span><span>331<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//tech.slashdot.org/story/21/06/02/2114259/huaweis-harmonyos-arrives-with-ipad-inspired-tablet-ui-apparent-android-base">Huawei's HarmonyOS Arrives With iPad-Inspired Tablet UI, Apparent Android Base</a> <span class="cmntcnt"><span class="slant"></span><span>39<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//slashdot.org/story/21/06/02/212205/amazon-warehouse-injuries-80-higher-than-competitors-report-claims">Amazon Warehouse Injuries '80% Higher' Than Competitors, Report Claims</a> <span class="cmntcnt"><span class="slant"></span><span>67<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//yro.slashdot.org/story/21/06/02/2043225/paypal-shuts-down-long-time-tor-supporter-with-no-recourse">PayPal Shuts Down Long-Time Tor Supporter With No Recourse</a> <span class="cmntcnt"><span class="slant"></span><span>152<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//tech.slashdot.org/story/21/06/02/2031234/microsoft-to-unveil-new-version-of-windows-on-june-24">Microsoft To Unveil New Version of Windows On June 24</a> <span class="cmntcnt"><span class="slant"></span><span>105<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//entertainment.slashdot.org/story/21/06/02/2025219/amc-is-giving-free-popcorn-away-to-meme-stonk-investors">AMC Is Giving Free Popcorn Away To Meme Stonk Investors</a> <span class="cmntcnt"><span class="slant"></span><span>30<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//slashdot.org/story/21/06/02/1959252/amazon-ends-testing-most-employees-for-marijuana-will-lobby-for-legalization">Amazon Ends Testing Most Employees For Marijuana, Will Lobby For Legalization</a> <span class="cmntcnt"><span class="slant"></span><span>102<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//slashdot.org/story/21/06/02/1943237/china-reports-first-human-case-of-h10n3-bird-flu">China Reports First Human Case of H10N3 Bird Flu</a> <span class="cmntcnt"><span class="slant"></span><span>83<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//tech.slashdot.org/story/21/06/02/1931236/google-chromes-top-web-app-advocate-resigns">Google Chrome's Top Web App Advocate Resigns</a> <span class="cmntcnt"><span class="slant"></span><span>52<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//it.slashdot.org/story/21/06/02/1848233/ransomware-attack-disrupts-massachusetts-ferries">Ransomware Attack Disrupts Massachusetts Ferries</a> <span class="cmntcnt"><span class="slant"></span><span>35<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//yro.slashdot.org/story/21/06/02/185213/alibabas-huge-browser-business-is-harvesting-the-private-web-activity-of-millions-of-android-and-iphone-users">Alibaba's Huge Browser Business Is Harvesting The 'Private' Web Activity Of Millions Of Android And iPhone Users</a> <span class="cmntcnt"><span class="slant"></span><span>50<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//apple.slashdot.org/story/21/06/02/1724249/apple-homeos-mentioned-in-job-listing-ahead-of-wwdc">Apple 'HomeOS' Mentioned in Job Listing Ahead of WWDC</a> <span class="cmntcnt"><span class="slant"></span><span>43<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//developers.slashdot.org/story/21/06/02/1624256/software-developer-community-stack-overflow-sold-to-tech-giant-prosus-for-18-billion">Software Developer Community Stack Overflow Sold To Tech Giant Prosus for $1.8 Billion</a> <span class="cmntcnt"><span class="slant"></span><span>105<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//slashdot.org/story/21/06/02/1546211/etsy-is-buying-gen-z-focused-fashion-resale-app-depop-for-162-billion">Etsy is Buying Gen Z-focused Fashion Resale App Depop for $1.62 Billion</a> <span class="cmntcnt"><span class="slant"></span><span>9<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//slashdot.org/story/21/06/02/1523207/huawei-ex-director-on-trial-in-poland-on-china-spying-charge">Huawei Ex-director On Trial In Poland On China Spying Charge</a> <span class="cmntcnt"><span class="slant"></span><span>27<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//apple.slashdot.org/story/21/06/02/1441202/apple-loses-multiple-top-managers-from-self-driving-car-division">Apple Loses Multiple Top Managers From Self-Driving Car Division</a> <span class="cmntcnt"><span class="slant"></span><span>54<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//tech.slashdot.org/story/21/06/02/142202/after-joint-debt-eu-seeks-more-integration-with-digital-id-card">After Joint Debt, EU Seeks More Integration With Digital ID Card</a> <span class="cmntcnt"><span class="slant"></span><span>117<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//it.slashdot.org/story/21/06/02/0014201/poisoned-installers-found-in-solarwinds-hackers-toolkit">Poisoned Installers Found In SolarWinds Hackers Toolkit</a> <span class="cmntcnt"><span class="slant"></span><span>16<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//science.slashdot.org/story/21/06/02/0020246/webb-telescope-launch-date-slips-again">Webb Telescope Launch Date Slips Again</a> <span class="cmntcnt"><span class="slant"></span><span>80<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//science.slashdot.org/story/21/06/01/2147201/space-debris-has-hit-and-damaged-the-international-space-station">Space Debris Has Hit and Damaged the International Space Station</a> <span class="cmntcnt"><span class="slant"></span><span>38<span class="hide"> comments</span></span></span><br>
+
+
+
+
+                        <nav class="abdb">
+
+                            <div class="archive_breaks after"><div class="slant"></div><span>June  2 2021</span></div>
+
+                            <div class="archive_breaks before"><div class="slant"></div><span>June  1 2021</span></div>
+                        </nav>
+
+
+                        <a href="//slashdot.org/story/21/06/01/2142220/employees-are-quitting-instead-of-giving-up-working-from-home">Employees Are Quitting Instead of Giving Up Working From Home</a> <span class="cmntcnt"><span class="slant"></span><span>363<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//science.slashdot.org/story/21/06/01/2137213/light-shrinking-material-lets-ordinary-microscope-see-in-super-resolution">Light-Shrinking Material Lets Ordinary Microscope See In Super Resolution</a> <span class="cmntcnt"><span class="slant"></span><span>19<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//slashdot.org/story/21/06/01/2127220/eu-set-to-unveil-plans-for-bloc-wide-digital-wallet">EU Set To Unveil Plans For Bloc-Wide Digital Wallet</a> <span class="cmntcnt"><span class="slant"></span><span>39<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//hardware.slashdot.org/story/21/06/01/2112242/amd-unveils-radeon-rx-6000m-mobile-gpus-for-new-breed-of-all-amd-gaming-laptops">AMD Unveils Radeon RX 6000M Mobile GPUs For New Breed of All-AMD Gaming Laptops</a> <span class="cmntcnt"><span class="slant"></span><span>15<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//yro.slashdot.org/story/21/06/01/213216/rom-site-owner-made-30000-a-year----now-owes-nintendo-21-million">ROM Site Owner Made $30,000 a Year -- Now Owes Nintendo $2.1 Million</a> <span class="cmntcnt"><span class="slant"></span><span>132<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//news.slashdot.org/story/21/06/01/2049223/facebook-says-us-is-the-top-target-of-disinformation-campaigns">Facebook Says US Is the Top Target of Disinformation Campaigns</a> <span class="cmntcnt"><span class="slant"></span><span>62<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//news.slashdot.org/story/21/06/01/2038224/ebay-sellers-can-no-longer-use-paypal-under-new-terms">eBay Sellers Can No Longer Use PayPal Under New Terms</a> <span class="cmntcnt"><span class="slant"></span><span>110<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//slashdot.org/story/21/06/01/2034235/can-a-cryptocurrency-break-the-buck">Can a Cryptocurrency Break the Buck?</a> <span class="cmntcnt"><span class="slant"></span><span>98<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//it.slashdot.org/story/21/06/01/1759254/top-meat-supplier-is-the-latest-victim-of-a-cyberattack">Top Meat Supplier is the Latest Victim of a Cyberattack</a> <span class="cmntcnt"><span class="slant"></span><span>45<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//news.slashdot.org/story/21/06/01/1843250/europe-to-us-pass-new-laws-if-you-want-a-data-transfer-deal">Europe To US: Pass New Laws If You Want a Data-Transfer Deal</a> <span class="cmntcnt"><span class="slant"></span><span>42<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//news.slashdot.org/story/21/06/01/1817215/belarus-bans-most-citizens-from-going-abroad">Belarus Bans Most Citizens from Going Abroad</a> <span class="cmntcnt"><span class="slant"></span><span>99<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//hardware.slashdot.org/story/21/06/01/1914240/instacart-bets-on-robots-to-shrink-ranks-of-500000-gig-shoppers">Instacart Bets on Robots To Shrink Ranks of 500,000 Gig Shoppers</a> <span class="cmntcnt"><span class="slant"></span><span>43<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//science.slashdot.org/story/21/06/01/1725221/send-in-the-bugs-the-michelangelos-need-cleaning">Send in the Bugs. The Michelangelos Need Cleaning.</a> <span class="cmntcnt"><span class="slant"></span><span>15<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//news.slashdot.org/story/21/06/01/1656215/firefox-89-arrives-with-controversial-proton-interface">Firefox 89 Arrives With Controversial Proton Interface</a> <span class="cmntcnt"><span class="slant"></span><span>194<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//news.slashdot.org/story/21/06/01/1642221/spongebob-and-transformers-cost-us-taxpayers-4-billion-study-says">SpongeBob and 'Transformers' Cost US Taxpayers $4 Billion, Study Says</a> <span class="cmntcnt"><span class="slant"></span><span>143<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//hardware.slashdot.org/story/21/06/01/1627212/the-geforce-rtx-3080-ti-is-nvidias-new-gaming-flagship">The GeForce RTX 3080 Ti is Nvidia's 'New Gaming Flagship'</a> <span class="cmntcnt"><span class="slant"></span><span>60<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//yro.slashdot.org/story/21/06/01/1611245/amazon-faced-75000-arbitration-demands-now-it-says-fine-sue-us">Amazon Faced 75,000 Arbitration Demands. Now It Says: Fine, Sue Us</a> <span class="cmntcnt"><span class="slant"></span><span>37<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//slashdot.org/story/21/06/01/1526222/samsung-exynos-chip-with-amd-graphics-to-bring-ray-tracing-to-mobile">Samsung Exynos Chip With AMD Graphics To Bring Ray-Tracing To Mobile</a> <span class="cmntcnt"><span class="slant"></span><span>26<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//tech.slashdot.org/story/21/06/01/1420224/rescuers-question-what3words-use-in-emergencies">Rescuers Question What3words' Use in Emergencies</a> <span class="cmntcnt"><span class="slant"></span><span>122<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//tech.slashdot.org/story/21/06/01/147208/autonomous-drone-attacked-soldiers-in-libya-all-on-its-own-un-report-says">Autonomous Drone Attacked Soldiers in Libya All on Its Own, UN Report Says</a> <span class="cmntcnt"><span class="slant"></span><span>177<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//science.slashdot.org/story/21/06/01/1059203/coronavirus-variants-get-new-names">Coronavirus Variants Get New Names</a> <span class="cmntcnt"><span class="slant"></span><span>233<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//slashdot.org/story/21/05/31/212201/intel-reiterates-chip-supply-shortages-could-last-several-years">Intel Reiterates Chip Supply Shortages Could Last Several Years</a> <span class="cmntcnt"><span class="slant"></span><span>91<span class="hide"> comments</span></span></span><br>
+
+
+
+
+                        <nav class="abdb">
+
+                            <div class="archive_breaks after"><div class="slant"></div><span>June  1 2021</span></div>
+
+                            <div class="archive_breaks before"><div class="slant"></div><span>May 31 2021</span></div>
+                        </nav>
+
+
+                        <a href="//tech.slashdot.org/story/21/05/31/2052258/xiaomi-shows-off-phone-that-can-charge-to-100-in-8-minutes">Xiaomi Shows Off Phone That Can Charge To 100% In 8 Minutes</a> <span class="cmntcnt"><span class="slant"></span><span>123<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//hardware.slashdot.org/story/21/05/31/2050210/seagate-exploring-possible-new-line-of-crypto-specific-hard-drives">Seagate 'Exploring' Possible New Line of Crypto-Specific Hard Drives</a> <span class="cmntcnt"><span class="slant"></span><span>47<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//hardware.slashdot.org/story/21/05/31/2046249/intels-latest-11th-gen-processor-brings-50ghz-speeds-to-thin-and-light-laptops">Intel's latest 11th Gen Processor Brings 5.0GHz Speeds To Thin and Light Laptops</a> <span class="cmntcnt"><span class="slant"></span><span>51<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//science.slashdot.org/story/21/05/31/2030244/two-new-laws-restrict-police-use-of-dna-search-method">Two New Laws Restrict Police Use of DNA Search Method</a> <span class="cmntcnt"><span class="slant"></span><span>80<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//yro.slashdot.org/story/21/05/31/2024259/amazon-devices-will-soon-automatically-share-your-internet-with-neighbors">Amazon Devices Will Soon Automatically Share Your Internet With Neighbors</a> <span class="cmntcnt"><span class="slant"></span><span>182<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//yro.slashdot.org/story/21/05/31/1958257/nsa-spied-on-european-politicians-through-danish-telecommunications-hub">NSA Spied on European Politicians Through Danish Telecommunications Hub</a> <span class="cmntcnt"><span class="slant"></span><span>40<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//slashdot.org/story/21/05/31/1922234/amazon-prime-is-an-economy-distorting-lie">'Amazon Prime Is an Economy-Distorting Lie'</a> <span class="cmntcnt"><span class="slant"></span><span>171<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//news.slashdot.org/story/21/05/31/1855226/californias-controversial-math-overhaul-focuses-on-equity">California's Controversial Math Overhaul Focuses on Equity</a> <span class="cmntcnt"><span class="slant"></span><span>307<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//news.slashdot.org/story/21/05/31/1836255/nestle-document-says-majority-of-its-food-portfolio-is-unhealthy">Nestle Document Says Majority of Its Food Portfolio is Unhealthy</a> <span class="cmntcnt"><span class="slant"></span><span>81<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//news.slashdot.org/story/21/05/31/1341202/amazon-calls-for-funding-k-12-cs-eyes-250m-seed-money-from-congress">Amazon Calls For Funding K-12 CS, Eyes $250M Seed Money From Congress</a> <span class="cmntcnt"><span class="slant"></span><span>31<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//tech.slashdot.org/story/21/05/31/168221/quic-gives-the-internets-data-transmission-foundation-a-needed-speedup">Quic Gives the Internet's Data Transmission Foundation a Needed Speedup</a> <span class="cmntcnt"><span class="slant"></span><span>80<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//news.slashdot.org/story/21/05/31/140204/china-allows-couples-to-have-three-children">China Allows Couples To Have Three Children</a> <span class="cmntcnt"><span class="slant"></span><span>276<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//hardware.slashdot.org/story/21/05/31/0148211/worlds-fastest-ai-supercomputer-built-from-6159-nvidia-a100-tensor-core-gpus">World's Fastest AI Supercomputer Built from 6,159 NVIDIA A100 Tensor Core GPUs</a> <span class="cmntcnt"><span class="slant"></span><span>57<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//news.slashdot.org/story/21/05/31/0238241/youtube-channel-remembers-and-preserves-ads-from-us-militarys-tv-service">YouTube Channel Remembers and Preserves Ads From US Military's TV Service</a> <span class="cmntcnt"><span class="slant"></span><span>18<span class="hide"> comments</span></span></span><br>
+
+
+
+
+                        <nav class="abdb">
+
+                            <div class="archive_breaks after"><div class="slant"></div><span>May 31 2021</span></div>
+
+                            <div class="archive_breaks before"><div class="slant"></div><span>May 30 2021</span></div>
+                        </nav>
+
+
+                        <a href="//tech.slashdot.org/story/21/05/31/0128217/facebook-and-instagram-confront-historically-bad-reputational-crisis-in-the-middle-east">Facebook and Instagram Confront Historically Bad 'Reputational Crisis' in the Middle East</a> <span class="cmntcnt"><span class="slant"></span><span>81<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//yro.slashdot.org/story/21/05/31/0053234/will-america-confront-the-kremlin-over-solarwinds-latest-massive-phishing-attack">Will America Confront the Kremlin Over SolarWinds' Latest Massive Phishing Attack?</a> <span class="cmntcnt"><span class="slant"></span><span>64<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//tech.slashdot.org/story/21/05/30/2348234/viral-tiktok-video-attracts-2500-teenagers-to-rowdy-california-birthday-party-175-arrested">Viral TikTok Video Attracts 2,500 Teenagers to Rowdy California Birthday Party. 175 Arrested</a> <span class="cmntcnt"><span class="slant"></span><span>97<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//hardware.slashdot.org/story/21/05/30/2250257/resale-prices-triple-for-nvidia-chips-as-gamers-compete-with-bitcoin-miners">Resale Prices Triple for NVIDIA Chips as Gamers Compete with Bitcoin Miners</a> <span class="cmntcnt"><span class="slant"></span><span>108<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//tech.slashdot.org/story/21/05/30/2140208/one-startups-quest-to-take-on-chrome-and-reinvent-the-web-browser">One Startup's Quest to Take on Chrome and Reinvent the Web Browser</a> <span class="cmntcnt"><span class="slant"></span><span>101<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//hardware.slashdot.org/story/21/05/30/2046212/is-natural-gas-mostly-good-for-global-warming">Is Natural Gas (Mostly) Good for Global Warming?</a> <span class="cmntcnt"><span class="slant"></span><span>138<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//news.slashdot.org/story/21/05/30/196221/youtube-takes-down-ads-showing-belarusian-bloggers-possibly-forced-confession-video">YouTube Takes Down Ads Showing Belarusian Blogger's Possibly-Forced Confession Video</a> <span class="cmntcnt"><span class="slant"></span><span>39<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//tech.slashdot.org/story/21/05/30/1752207/aerion-shuts-down-halts-work-on-proposed-supersonic-business-jet">Aerion Shuts Down, Halts Work On Proposed Supersonic Business Jet </a> <span class="cmntcnt"><span class="slant"></span><span>35<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//science.slashdot.org/story/21/05/29/2337216/space-plane-startup-promises-one-hour-rides-to-anywhere-on-earth-at-9000-mph">Space Plane Startup Promises One-Hour Rides to Anywhere on Earth at 9,000 MPH</a> <span class="cmntcnt"><span class="slant"></span><span>91<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//yro.slashdot.org/story/21/05/30/1417214/florida-health-departments-actions-investigated-as-fired-data-manager-now-granted-whistleblower-status">Florida Health Department's Actions Investigated as Fired Data Manager Now Granted 'Whistleblower' Status</a> <span class="cmntcnt"><span class="slant"></span><span>105<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//linux.slashdot.org/story/21/05/29/1755229/millions-can-now-run-linux-gui-apps-in-windows-10">Millions Can Now Run Linux GUI Apps in Windows 10</a> <span class="cmntcnt"><span class="slant"></span><span>202<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//hardware.slashdot.org/story/21/05/29/239209/chinas-artificial-sun-fusion-reactor-just-set-a-new-world-record">China's 'Artificial Sun' Fusion Reactor Just Set a New World Record</a> <span class="cmntcnt"><span class="slant"></span><span>90<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//tech.slashdot.org/story/21/05/30/0018259/guess-who-opposes-federal-funding-for-broadband-internet-services-run-by-city-governments">Guess Who Opposes Federal Funding for Broadband Internet Services Run by City Governments?</a> <span class="cmntcnt"><span class="slant"></span><span>116<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//tech.slashdot.org/story/21/05/30/0045212/jerusalem-post-israels-gaza-strip-bombing-was-worlds-first-ai-war">Jerusalem Post: Israel's Gaza Strip Bombing Was 'World's First AI War'</a> <span class="cmntcnt"><span class="slant"></span><span>276<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//tech.slashdot.org/story/21/05/30/0114200/twitter-and-facebook-admit-they-wrongly-blocked-millions-of-posts-about-gaza-strip-airstrikes">Twitter and Facebook Admit They Wrongly Blocked Millions of Posts About Gaza Strip Airstrikes</a> <span class="cmntcnt"><span class="slant"></span><span>156<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//hardware.slashdot.org/story/21/05/30/0155233/robots-and-ai-will-guide-australias-first-fully-automated-farm">Robots and AI Will Guide Australia's First Fully Automated Farm</a> <span class="cmntcnt"><span class="slant"></span><span>41<span class="hide"> comments</span></span></span><br>
+
+
+
+
+                        <nav class="abdb">
+
+                            <div class="archive_breaks after"><div class="slant"></div><span>May 30 2021</span></div>
+
+                            <div class="archive_breaks before"><div class="slant"></div><span>May 29 2021</span></div>
+                        </nav>
+
+
+                        <a href="//news.slashdot.org/story/21/05/29/1857226/coalition-including-microsoft-linux-foundation-github-urge-green-software-development">Coalition Including Microsoft, Linux Foundation, GitHub Urge Green Software Development</a> <span class="cmntcnt"><span class="slant"></span><span>136<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//yro.slashdot.org/story/21/05/29/2233219/amazons-echo-show-can-now-watch-your-house-for-you">Amazon's 'Echo Show' Can Now Watch Your House For You</a> <span class="cmntcnt"><span class="slant"></span><span>57<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//news.slashdot.org/story/21/05/29/1947255/intelligent-nft-created-linked-to-a-machine-learning-chatbot">Intelligent NFT Created Linked to a Machine-Learning Chatbot</a> <span class="cmntcnt"><span class="slant"></span><span>22<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//hardware.slashdot.org/story/21/05/29/209250/could-zinc-batteries-replace-lithium-ion-batteries-on-the-power-grid">Could Zinc Batteries Replace Lithium-Ion Batteries on the Power Grid?</a> <span class="cmntcnt"><span class="slant"></span><span>120<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//developers.slashdot.org/story/21/05/29/0532204/now-generally-available-microsofts-open-source-java-distribution-microsoft-build-of-openjdk">Now Generally Available:  Microsoft's Open Source Java Distribution, 'Microsoft Build of OpenJDK'</a> <span class="cmntcnt"><span class="slant"></span><span>71<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//tech.slashdot.org/story/21/05/29/0450200/a-new-worker-owned-cooperative-starts-competing-with-uber-and-lyft">A New Worker-Owned Cooperative Starts Competing With Uber and Lyft</a> <span class="cmntcnt"><span class="slant"></span><span>72<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//news.slashdot.org/story/21/05/29/0419226/would-it-even-be-possible-to-communicate-with-an-alien">Would It Even Be Possible to Communicate with an Alien?</a> <span class="cmntcnt"><span class="slant"></span><span>167<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//yro.slashdot.org/story/21/05/29/0312227/with-massive-cybersecurity-labor-shortage-will-corporations-compete-with-local-governments">With 'Massive' Cybersecurity Labor Shortage, Will Corporations Compete with Local Governments?</a> <span class="cmntcnt"><span class="slant"></span><span>83<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//developers.slashdot.org/story/21/05/29/0224246/freenode-apologizes-as-prominent-open-source-projects-switch-to-libera-chat">Freenode Apologizes as Prominent Open Source Projects Switch to Libera Chat</a> <span class="cmntcnt"><span class="slant"></span><span>122<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//news.slashdot.org/story/21/05/29/0144223/free-software-foundations-executive-director-resigns">Free Software Foundation's Executive Director Resigns</a> <span class="cmntcnt"><span class="slant"></span><span>41<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//yro.slashdot.org/story/21/05/29/0035218/iran-bans-crypto-mining-after-months-of-blackouts">Iran Bans Crypto Mining After Months of Blackouts</a> <span class="cmntcnt"><span class="slant"></span><span>100<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//science.slashdot.org/story/21/05/29/0032213/primates-change-their-accent-to-avoid-conflict">Primates Change Their 'Accent' To Avoid Conflict</a> <span class="cmntcnt"><span class="slant"></span><span>37<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//science.slashdot.org/story/21/05/29/0038238/nasas-mars-helicopter-goes-on-stressful-wild-flight-after-malfunction">NASA's Mars Helicopter Goes On 'Stressful' Wild Flight After Malfunction</a> <span class="cmntcnt"><span class="slant"></span><span>49<span class="hide"> comments</span></span></span><br>
+
+
+
+
+                        <nav class="abdb">
+
+                            <div class="archive_breaks after"><div class="slant"></div><span>May 29 2021</span></div>
+
+                            <div class="archive_breaks before"><div class="slant"></div><span>May 28 2021</span></div>
+                        </nav>
+
+
+                        <a href="//news.slashdot.org/story/21/05/28/2155237/satellites-may-have-been-underestimating-the-planets-warming-for-decades">Satellites May Have Been Underestimating the Planet's Warming For Decades</a> <span class="cmntcnt"><span class="slant"></span><span>137<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//tech.slashdot.org/story/21/05/28/2144220/twitter-could-be-working-on-facebook-style-reactions">Twitter Could Be Working On Facebook-Style Reactions</a> <span class="cmntcnt"><span class="slant"></span><span>7<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//yro.slashdot.org/story/21/05/28/2140220/whatsapp-says-it-wont-limit-functionality-if-you-refuse-its-privacy-policy----for-now">WhatsApp Says It Won't Limit Functionality If You Refuse Its Privacy Policy -- For Now</a> <span class="cmntcnt"><span class="slant"></span><span>10<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//hardware.slashdot.org/story/21/05/28/2125234/apps-reportedly-limited-to-maximum-of-5gb-ram-in-ipados-even-with-16gb-m1-ipad-pro">Apps Reportedly Limited To Maximum of 5GB RAM In iPadOS, Even With 16GB M1 iPad Pro</a> <span class="cmntcnt"><span class="slant"></span><span>158<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//tech.slashdot.org/story/21/05/28/2111207/us-soldiers-expose-nuclear-weapons-secrets-via-flashcard-apps">US Soldiers Expose Nuclear Weapons Secrets Via Flashcard Apps</a> <span class="cmntcnt"><span class="slant"></span><span>39<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//slashdot.org/story/21/05/28/2057229/should-microsoft-have-kept-mum-on-gates-nixed-employee-board-representation">Should Microsoft Have Kept Mum On Gates, Nixed Employee Board Representation?</a> <span class="cmntcnt"><span class="slant"></span><span>58<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//yro.slashdot.org/story/21/05/28/2047252/uk-police-stumble-upon-bitcoin-mine-while-looking-for-cannabis-farm">UK Police Stumble Upon Bitcoin Mine While Looking For Cannabis Farm</a> <span class="cmntcnt"><span class="slant"></span><span>68<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//developers.slashdot.org/story/21/05/28/2044238/ai-could-soon-write-code-based-on-ordinary-language">AI Could Soon Write Code Based On Ordinary Language</a> <span class="cmntcnt"><span class="slant"></span><span>57<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//news.slashdot.org/story/21/05/28/2011225/biden-administration-continues-to-defend-social-media-registration-requirement-in-court">Biden Administration Continues To Defend Social Media Registration Requirement in Court</a> <span class="cmntcnt"><span class="slant"></span><span>52<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//games.slashdot.org/story/21/05/28/202210/big-video-game-leaks-like-far-cry-6-are-nearly-impossible-to-stop">Big Video Game Leaks Like 'Far Cry 6' Are Nearly Impossible To Stop</a> <span class="cmntcnt"><span class="slant"></span><span>23<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//tech.slashdot.org/story/21/05/28/1928259/twitch-warns-streamers-another-wave-of-copyright-strikes-is-coming">Twitch Warns Streamers Another Wave of Copyright Strikes is Coming</a> <span class="cmntcnt"><span class="slant"></span><span>63<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//tech.slashdot.org/story/21/05/28/199253/facebook-whatsapp-google-and-other-internet-giants-comply-with-indias-it-rules">Facebook, WhatsApp, Google and Other Internet Giants Comply With India's IT Rules</a> <span class="cmntcnt"><span class="slant"></span><span>20<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//science.slashdot.org/story/21/05/28/1837240/astronaut-chris-hadfield-calls-alien-ufo-hype-foolishness">Astronaut Chris Hadfield Calls Alien UFO Hype 'Foolishness'</a> <span class="cmntcnt"><span class="slant"></span><span>156<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//news.slashdot.org/story/21/05/28/1816259/harvey-schlossberg-cop-with-a-phd-in-defusing-a-crisis-dies-at-85">Harvey Schlossberg, Cop With a PhD in Defusing a Crisis, Dies at 85</a> <span class="cmntcnt"><span class="slant"></span><span>32<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//it.slashdot.org/story/21/05/28/1730213/days-before-a-report-chinese-hackers-removed-malware-from-infected-networks">Days Before a Report, Chinese Hackers Removed Malware From Infected Networks</a> <span class="cmntcnt"><span class="slant"></span><span>28<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//tech.slashdot.org/story/21/05/28/1646215/google-nears-settlement-of-ad-tech-antitrust-case-in-france">Google Nears Settlement of Ad-Tech Antitrust Case in France</a> <span class="cmntcnt"><span class="slant"></span><span>2<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//tech.slashdot.org/story/21/05/28/162226/logitech-ceo-says-chip-shortage-could-last-for-up-to-a-year">Logitech CEO Says Chip Shortage Could Last for Up To a Year</a> <span class="cmntcnt"><span class="slant"></span><span>64<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//tech.slashdot.org/story/21/05/28/1510200/googles-chrome-browser-is-about-to-get-a-lot-faster">Google's Chrome Browser is About To Get a Lot Faster</a> <span class="cmntcnt"><span class="slant"></span><span>78<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//tech.slashdot.org/story/21/05/28/1428229/microsoft-says-solarwinds-hackers-have-struck-again-at-the-us-and-other-countries">Microsoft Says SolarWinds Hackers Have Struck Again at the US and Other Countries</a> <span class="cmntcnt"><span class="slant"></span><span>24<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//tech.slashdot.org/story/21/05/28/1355219/the-fbi-will-feed-hacked-passwords-directly-into-have-i-been-pwned">The FBI Will Feed Hacked Passwords Directly Into Have I Been Pwned</a> <span class="cmntcnt"><span class="slant"></span><span>32<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//tech.slashdot.org/story/21/05/28/0055211/charter-charges-more-money-for-slower-internet-on-streets-with-no-competition">Charter Charges More Money For Slower Internet On Streets With No Competition</a> <span class="cmntcnt"><span class="slant"></span><span>100<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//yro.slashdot.org/story/21/05/28/0045222/chinese-hackers-posing-as-the-un-human-rights-council-are-attacking-uyghurs">Chinese Hackers Posing As the UN Human Rights Council Are Attacking Uyghurs</a> <span class="cmntcnt"><span class="slant"></span><span>91<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//science.slashdot.org/story/21/05/27/228230/new-dark-matter-map-reveals-cosmic-mystery">New Dark Matter Map Reveals Cosmic Mystery</a> <span class="cmntcnt"><span class="slant"></span><span>52<span class="hide"> comments</span></span></span><br>
+
+
+
+
+                        <nav class="abdb">
+
+                            <div class="archive_breaks after"><div class="slant"></div><span>May 28 2021</span></div>
+
+                            <div class="archive_breaks before"><div class="slant"></div><span>May 27 2021</span></div>
+                        </nav>
+
+
+                        <a href="//hardware.slashdot.org/story/21/05/27/2212235/more-people-are-buying-wearables-than-ever-before">More People Are Buying Wearables Than Ever Before</a> <span class="cmntcnt"><span class="slant"></span><span>76<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//science.slashdot.org/story/21/05/27/222233/cities-have-their-own-distinct-microbial-fingerprints">Cities Have Their Own Distinct Microbial Fingerprints</a> <span class="cmntcnt"><span class="slant"></span><span>26<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//tech.slashdot.org/story/21/05/27/2155214/the-boring-company-tests-its-teslas-in-tunnels-system-in-las-vegas">The Boring Company Tests Its 'Teslas In Tunnels' System In Las Vegas</a> <span class="cmntcnt"><span class="slant"></span><span>119<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//games.slashdot.org/story/21/05/27/2149229/epic-games-launches-unreal-engine-5-early-access-shows-massive-3d-scenes">Epic Games Launches Unreal Engine 5 Early Access, Shows Massive 3D Scenes</a> <span class="cmntcnt"><span class="slant"></span><span>25<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//science.slashdot.org/story/21/05/27/2048251/german-scientists-identify-possible-cause-of-vaccine-blood-clots">German Scientists Identify Possible Cause of Vaccine Blood Clots</a> <span class="cmntcnt"><span class="slant"></span><span>95<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//tech.slashdot.org/story/21/05/27/200243/tech-liability-shield-has-no-place-in-trade-deals-groups-say">Tech Liability Shield Has No Place in Trade Deals, Groups Say</a> <span class="cmntcnt"><span class="slant"></span><span>26<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//news.slashdot.org/story/21/05/27/2033207/colorado-ditches-sat-act-and-legacy-admissions-for-public-colleges">Colorado Ditches SAT, ACT and Legacy Admissions For Public Colleges</a> <span class="cmntcnt"><span class="slant"></span><span>156<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//yro.slashdot.org/story/21/05/27/2025226/cox-appeals-1-billion-piracy-liability-verdict-to-save-the-internet">Cox Appeals $1 Billion Piracy Liability Verdict To 'Save the Internet'</a> <span class="cmntcnt"><span class="slant"></span><span>51<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//slashdot.org/story/21/05/27/2023242/a-disturbing-viral-twitter-thread-reveals-how-ai-powered-insurance-can-go-wrong">A Disturbing, Viral Twitter Thread Reveals How AI-Powered Insurance Can Go Wrong</a> <span class="cmntcnt"><span class="slant"></span><span>49<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//yro.slashdot.org/story/21/05/27/2040254/industry-groups-sue-to-stop-floridas-new-social-media-law">Industry Groups Sue To Stop Florida's New Social Media Law</a> <span class="cmntcnt"><span class="slant"></span><span>142<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//science.slashdot.org/story/21/05/27/1957230/immunity-to-the-coronavirus-may-persist-for-years-scientists-find">Immunity To the Coronavirus May Persist for Years, Scientists Find</a> <span class="cmntcnt"><span class="slant"></span><span>111<span class="hide"> comments</span></span></span><br>
+
+
+
+
+
+                        <a href="//science.slashdot.org/story/21/05/27/1925243/humans-probably-cant-live-longer-than-150-years-new-research-finds">Humans Probably Can't Live Longer Than 150 Years, New Research Finds</a> <span class="cmntcnt"><span class="slant"></span><span>109<span class="hide"> comments</span></span></span><br>
+
+
+
+                        <hr class="clear clearfix">
+                        <div class="tleft" id="archpagin">
+                            Page:
+
+                            <span class="active tcenter">1<span></span></span>
+
+                            <a href="//slashdot.org/archive.pl?op=bytime&amp;keyword=&amp;year=2021&amp;page=2">2 &rarr;</a>
+                        </div><!-- footer type=legacy begin -->
+
+
+
+
+                </section>
+
+
+            </section>
+        </div>
+    </section>
+</section>
+
+
+<footer id="fhft" class="grid_24 nf">
+    <div id="logo_nf" class="fleft">
+        <a href="//slashdot.org"><span>Slashdot</span></a>
+    </div>
+    <nav role="firehose footer">
+
+        <ul class="fright submitstory">
+            <li class="fright"><a href="/submit">Submit<span class="opt"> Story</span></a></li>
+        </ul>
+    </nav>
+</footer>
+<section class="bq"><blockquote class="msg grid_24" cite="https://slashdot.org"><p>Those who do not understand Unix are condemned to reinvent it, poorly.
+    - Henry Spencer, University of Toronto Unix hack</p><span class="slant"></span></blockquote></section>
+<footer id="ft" class="grid_24">
+    <nav class="grid_10" role="footer">
+        <ul>
+            <li><a href="//slashdot.org/faq">FAQ</a></li>
+            <li><a href="//slashdot.org/archive.pl">Story Archive</a></li>
+            <li><a href="//slashdot.org/hof.shtml">Hall of Fame</a></li>
+            <li><a href="http://slashdotmedia.com/advertising-and-marketing-services/" rel="nofollow">Advertising</a></li>
+            <li><a href="http://slashdotmedia.com/terms-of-use/" rel="nofollow">Terms</a></li>
+            <li><a href="http://slashdotmedia.com/privacy-statement/" rel="nofollow">Privacy Statement</a></li>
+            <li><a href="//slashdot.org/faq/slashmeta.shtml" rel="nofollow">About</a></li>
+            <li>
+                <a href="mailto:feedback@slashdot.org">Feedback</a>
+            </li>
+            <li><a href="#" onclick="set_mobile_pref('mobile',1);return false;">Mobile View</a></li>
+            <li><a href="#" id="opt-out-link"></a></li>
+            <li><button class="btn opt-out" id="opt-out-button" style="display:none">
+                <img src="//a.fsdn.com/sd/ccpa-optout.png" alt="Icon">
+                Do Not Sell My Personal Information</button></li>
+        </ul>
+    </nav>
+
+    <br>
+    <div class="grid_14 tright tm">Trademarks property of their respective owners. Comments owned by the poster. <span class="nobr">Copyright &copy; 2021 SlashdotMedia. All Rights Reserved.</span></div>
+
+
+    <div class="overlay-custom" style="width: 100%;display:none">
+        <div class="modal-custom" id="ccpa-modal" style="max-width: 100%">
+            <div class="modal-content">
+                <span class="close" id="modal-close">&times;</span>
+                <div class="modal-header" id="ccpa-modal-content-destination"></div>
+            </div>
+        </div>
+    </div>
+
+
+</footer>
+<script>
+        var regular_opt_out_link = true;
+
+        if (window.region == 'CA' && window.country_code2 == 'US') {
+            regular_opt_out_link = false;
+			document.getElementById('opt-out-button').setAttribute('style', 'display:inline');
+		}
+
+        if (window.is_euro_union === 1) {
+            regular_opt_out_link = false;
+            var elem = '<a href="#" title="Privacy Choices" onclick="bizx.cmp.promptConsent(); return false;">Privacy Choices</a>';
+            document.getElementById('opt-out-link').innerHTML = elem;
+        }
+
+        if (regular_opt_out_link == true) {
+            var elem = '<a href="http://slashdotmedia.com/opt-out-choices" title="Opt Out" rel="nofollow">Opt Out</a>';
+            document.getElementById('opt-out-link').innerHTML = elem;
+        }
+
+		var modal = document.getElementById('ccpa-modal');
+		var btn = document.getElementById('opt-out-button');
+		var span = document.getElementById('modal-close');
+
+		btn.onclick = function() {
+			modal.style.display = 'block';
+		};
+
+		span.onclick = function() {
+			modal.style.display = 'none';
+		};
+
+     </script>
+<div id="login_cover" class="hide" onclick="hide_login_box()"></div>
+<div id="login_box" class="hide">
+    <div id="login_box_content">
+        <div id='embbeded_login_modal' class="hide">
+            <form action="https://slashdot.org/my/login" method="post" onsubmit="if (global_returnto) { this.returnto.value = global_returnto }" class="embedded"><fieldset style="-webkit-border-radius:10px 10px 0 0;border-radius:10px 10px 0 0;-moz-border-radius:10px 10px 0 0">
+                <div style='height:25px;'>&nbsp;</div>
+                <input type="hidden" name="returnto" value="">
+                <input type="hidden" name="op" value="userlogin">
+                <p>
+                    <label class="fleft" for="unickname">Nickname:</label>
+                    <input type="text" name="unickname" value="">
+                </p>
+                <p>
+                    <label class="fleft" for="upasswd">Password:</label>
+                    <input type="password" name="upasswd">
+                </p>
+                <label class="checkbox"><input type="checkbox" name="login_temp" value="yes"> Public Terminal</label>
+                <br>
+                <hr>
+                <input type="submit" name="userlogin" value="Log In" class="fno"> <a href="//slashdot.org/my/mailpassword" class="btn link" onclick="getModalPrefs('sendPasswdModal', 'Retrieve Password', 1); return false;">Forgot your password?</a>
+            </fieldset></form>
+
+            <div class="actions">
+                <a class="ico close" onclick="hide_login_slider();" href=""><span>Close</span></a>
+            </div>
+        </div>
+        <div class="actions">
+            <a class="ico close" href="#" onclick="hide_login_box(); return false"><span>Close</span></a>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">logged_in = 0</script>
+<!-- CCM Tag -->
+<script type="text/javascript">
+bizx.cmp.ifConsent('', ['all','bombora'], function() {
+        /*global _ml:true, window */
+        _ml = window._ml || {};
+        _ml.eid = '771';
+
+        var s = document.getElementsByTagName('script')[0], cd = new Date(), mltag = document.createElement('script');
+        mltag.type = 'text/javascript'; mltag.async = true;
+        mltag.src = '//ml314.com/tag.aspx?' + cd.getDate() + cd.getMonth() + cd.getFullYear();
+        s.parentNode.insertBefore(mltag, s);
+});
+</script>
+<!-- End CCM Tag -->
+
+<script type="text/javascript">
+window.google_analytics_uacct = "UA-32013-5";
+
+var _gaq = _gaq || [];
+
+
+
+
+
+  _gaq.push(['_setAccount', 'UA-36136016-1']);
+  _gaq.push(['b._setAccount', 'UA-32013-5']);
+  _gaq.push(['_setDomainName', '.slashdot.org']);
+  _gaq.push(['b._setDomainName', '.slashdot.org']);
+
+
+		_gaq.push(['_addIgnoredRef', 'slashdot.org']);
+		_gaq.push(['b._addIgnoredRef', 'slashdot.org']);
+
+
+
+  _gaq.push(['_setCustomVar', 1, 'User Type',  'Anon', 3]);
+  _gaq.push(['b._setCustomVar', 1, 'User Type',  'Anon', 3]);
+
+	_gaq.push(['_setCustomVar', 2, 'Page','archive', 3]);
+	_gaq.push(['b._setCustomVar', 2, 'Page','archive', 3]);
+
+
+
+
+
+// track beta behavior for user
+var betamatches = document.cookie.match(/betagroup=(-?\d+)/);
+
+if(betamatches && betamatches[1]) {
+  if(betamatches[1] == -1) {
+    _gaq.push(['_setCustomVar', 3, 'Beta-Usage','opt-out', 3]);
+  } else {
+    _gaq.push(['_setCustomVar', 3, 'Beta-Usage','unredirected', 3]);
+  }
+}
+
+
+
+  _gaq.push(['_trackPageview']);
+  _gaq.push(['b._trackPageview']);
+  _gaq.push(['_trackPageLoadTime']);
+  _gaq.push(['b._trackPageLoadTime']);
+
+
+if (window.is_euro_union === 0) {
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+}
+</script>
+
+<!-- CCM GA Push -->
+<script>
+    if (typeof _ml !== 'undefined' && _ml.us) {
+        if (_ml.us.tp && _ml.us.tp.length > 0) {
+            ga('set', 'dimension2', _ml.us.tp[0]);
+        }
+        if (_ml.us.pc && _ml.us.pc.length > 0) {
+            ga('set', 'dimension7', _ml.us.pc[0]);
+        }
+        ga('set', 'dimension3', _ml.us.ind);
+        ga('set', 'dimension4', _ml.us.cr);
+        ga('set', 'dimension5', _ml.us.cs);
+        ga('set', 'dimension6', _ml.us.dm);
+        ga('set', 'dimension8', _ml.us.sn);
+    }
+</script>
+
+<!-- Sticky Ads -->
+<script type="text/javascript">
+var topBannerViewed = false;
+if($('#div-gpt-ad-728x90_a').length > 0 && $('#div-gpt-ad-300x250_a').length > 0 && window.outerWidth >= 1070 && !isAdBlockActive){
+    $(window).scroll(function(){
+        var y = $(document).scrollTop();
+        var z =  y + window.outerHeight;
+        var navOffset = 0;
+        var offset = [
+            $('.nav-wrap').outerHeight(true),
+            $('.nav-secondary-wrap').outerHeight(true)
+        ];
+        for(row in offset){
+            if(offset[row]) navOffset = navOffset + parseInt(offset[row]);
+        }
+        $('.adwrap-unviewed').each(function(){
+            var cls = 'adwrap-sticky';
+            var toggleCls = 'adwrap';
+			//$('.banner-wrapper').css('height', $('.banner-contain').outerHeight());
+            if($(this).hasClass('railad')) {
+                if(topBannerViewed){
+                    var topPixels = $(this).offset().top;
+                    navOffset += $('.adwrap').outerHeight();
+                    if(y >= topPixels && y >= navOffset){
+                        $('#slashboxes').css('top', 0).css('position','fixed').css('right',13);
+                    } else {
+                        $('#slashboxes').removeAttr('style');
+                    }
+                }
+                return;
+            }
+            var topPixels = $(this).offset().top;
+        if(y >= topPixels && y >= navOffset){
+                $(this).addClass(cls);
+                $(this).removeClass('adwrap');
+				if(cls == 'adwrap-sticky') { //top banner
+                    topBannerViewed = false;
+					$('#slashboxes').css('top',$(this).outerHeight() || 0).css('position','fixed').css('right',13);
+				}
+        if(topBannerViewed) {
+                    //console.log('hereeee');
+					$('#slashboxes').css('top', 0).css('position','fixed').css('right',13);
+				}
+            }else{
+								//console.log('topBannerViewed', topBannerViewed);
+                $(this).removeClass(cls);
+                $(this).addClass(toggleCls);
+                $('#slashboxes').removeAttr('style');
+            }
+        });
+		if($('.adwrap-viewed-banner').length > 0){
+		  //console.log('ads topBanner displayed');
+			topBannerViewed = true;
+			$('.adwrap-viewed-banner').removeClass('adwrap-unviewed').removeClass('adwrap-sticky').addClass('adwrap');
+		}
+    if($('.adwrap-viewed-railad').length > 0){
+						//console.log('ads sidebar displayed');
+            $('.adwrap-viewed-railad').removeClass('adwrap-unviewed').removeClass('adwrap-railad-sticky');
+			$('#slashboxes').removeAttr('style');
+		}
+    });
+}
+</script>
+
+<!-- Piwik -->
+<script type="text/javascript">
+  var _paq = _paq || [];
+  _paq.push(["setCookieDomain", "*.slashdot.org"]);
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+function initPiwikAndNels() {
+  (function() {
+    var u="//analytics.slashdotmedia.com/";
+    _paq.push(['setTrackerUrl', u+'sd.php']);
+    _paq.push(['setSiteId', 40]);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'sd.js'; s.parentNode.insertBefore(g,s);
+  })();
+
+    if(window.location.pathname == '/'){
+        var nelId = (location.search.split('nel_id=')[1] || '').split('&')[0];
+        var url = '/ajax.pl?op=nel';
+        if(nelId){
+            url += '&nel_id='+nelId;
+        }
+        $.ajax({
+            url: url,
+            success: function(html){
+                $('#firehoselist article').eq(1).after(html);
+            }
+        });
+    }
+    //announcement NEL
+    if(document.getElementById('announcementText')){
+      $('#announcementText').hide();
+      var hlUrl = '/ajax.pl?op=hl_nel';
+      if(nelId){
+        hlUrl += '&nel_id='+nelId;
+      }
+      $.ajax({
+        url: hlUrl,
+        success: function(html){
+          if(html.length < 10){
+            $('#announcementText').show();
+            return;
+          }
+          $('#announcementText').html(html).show();
+        },
+        error: function () {
+          $('#announcementText').show();
+        }
+      });
+    }
+}
+bizx.cmp.ifConsent('', ['storage', 'measurement'], initPiwikAndNels);
+</script>
+
+
+<script type="text/javascript">
+_linkedin_data_partner_id = "113712";
+</script><script type="text/javascript">
+if (window.is_euro_union === 0) {
+(function(){var s = document.getElementsByTagName("script")[0];
+var b = document.createElement("script");
+b.type = "text/javascript";b.async = true;
+b.src = "https://snap.licdn.com/li.lms-analytics/insight.min.js";
+s.parentNode.insertBefore(b, s);})();
+}
+</script>
+<noscript>
+    <img height="1" width="1" style="display:none;" alt="" src="https://dc.ads.linkedin.com/collect/?pid=113712&fmt=gif" />
+</noscript>
+
+<!-- Datonics -->
+<script type="text/javascript">
+if (window.is_euro_union === 0) {
+    bizx.cmp.embedScript("//ads.pro-market.net/ads/scripts/site-143573.js", true);
+}
+</script>
+<div class="overlay"></div>
+<div class="modal-box">
+    <a href="#" id="close-modal">Close</a>
+    <article class="modal-content">
+    </article>
+    <footer>
+</div>
+
+
+
+
+<div id="modal_cover" class="hide" onclick="hide_modal_box(); return false;"></div>
+<div id="modal_box" class="hide">
+    <div id="modal_box_content"></div>
+    <header class="n">
+        <span class="fadeout"></span>
+        <span class="fadeoutfade"></span>
+        <span class="pf"><a class="ico close" onclick="hide_modal_box(); return false;" href="#"><span>Close</span></a></span>
+        <h3 class="pf"><div id="logo"><a href="//slashdot.org">Slashdot</a></div><span id="preference_title"></span></h3>
+    </header>
+</div>
+<script id="after-content" type="text/javascript">
+(function( $, fn, console ){
+	$ && fn && $(function(){ fn($, console); });
+})(window.jQuery, window.pageload_done, window.console);
+</script>
+<img src="//slashdot.org/adbanner.gif?t=20210609" alt="">
+<img src="//slashdot.org/purple.gif?t=20210609" alt="">
+<script type='text/javascript'>
+	if(!document.location.href.match(/source=autorefresh/)) {
+		document.write('<img src="//slashdot.org/images/js.gif?732">');
+	}
+</script>
+<noscript>
+    <img src="//slashdot.org/images/njs.gif?712">
+</noscript>
+<script>
+            if (window.is_euro_union === 0) {
+                document.querySelectorAll('body')[0].classList.add('no-cmp');
+            }
+
+</script>
+</body>
+</html>
+<!-- footer type=legacy end -->

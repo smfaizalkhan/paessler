@@ -12,6 +12,7 @@ import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.when;
 
@@ -19,17 +20,19 @@ class NewsServiceTest {
 
     @InjectMocks
     private NewsService newsService;
+    @Mock
+    private FetchNews fetchNews;
 
 
     @BeforeEach
     public void setUp(){
         MockitoAnnotations.openMocks(this);
-        ReflectionTestUtils.setField(newsService, "mapOfDateToNews", DomainFactory.getmapOfDateToNews());
-        reset();
+        reset(fetchNews);
     }
 
     @Test
     void filtrationDate_Success() {
+       when(fetchNews.extractNews(anyString())).thenReturn(DomainFactory.getNewsContent());
         assertThat(newsService.filterationDate(Optional.of("2015"))).isNotEmpty();
     }
     @Test
